@@ -1,0 +1,50 @@
+.question-format-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.question-format-item label {
+    margin-right: 10px;
+}
+
+.marks-input,
+.questions-input {
+    width: 50px;
+    margin-right: 10px;
+}
+
+.form-control {
+    flex: 1;
+}
+
+.delete-format {
+    margin-left: 10px;
+}
+
+@media screen and (max-width: 600px) {
+    .question-format-item {
+        display: block;
+    }
+
+    .question-format-item label {
+        margin-top: 10px;
+        margin-right: 0;
+    }
+
+    .marks-input,
+    .questions-input {
+        width: 100%;
+        margin-top: 10px;
+        margin-right: 0;
+    }
+
+    .delete-format {
+        margin-top: 10px;
+        margin-left: 0px;
+    }
+
+    .form-control {
+        flex: 0;
+    }
+}

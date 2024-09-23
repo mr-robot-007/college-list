@@ -1,0 +1,42 @@
+.option-container {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.option-container label {
+    margin-right: 10px;
+}
+
+.sequence-input {
+    width: 25px;
+    margin-right: 10px;
+}
+
+.form-control {
+    flex: 1;
+}
+.delete-option {
+    margin-left: 10px;
+}
+
+@media screen and (max-width: 600px) {
+    .option-container {
+        display:block;
+    }
+    .option-container label {
+        margin-top: 10px;
+        margin-right: 0px;
+    }
+    .sequence-input {
+        margin-top: 10px;
+        margin-right: 0px;
+    }
+    .delete-option {
+        margin-top: 10px;
+        margin-left: 0px;
+    }
+    .form-control {
+        flex: 0;
+    }
+}
