@@ -31,7 +31,7 @@
                         <li class="nav-item">
                             <a href="{{route('admin.institutes')}}" class="nav-link ml-3 {{((@$parent=='administration' && @$child=='institutelist') ? 'active' : '')}}">
                                 <i class="far fa-circle {{((@$parent=='administration' && @$child=='institutelist') ? 'text-danger' : 'text-info')}}"></i>
-                                <p class="ml-2">Institutes</p>
+                                <p class="ml-2">Universities</p>
                             </a>
                         </li>
                         <li class="nav-item">

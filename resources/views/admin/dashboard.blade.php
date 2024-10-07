@@ -63,13 +63,6 @@
 					<label>Course</label>
 					<select name="course_name" id="course_name" class="form-control" placeholder="Course Title" required>
                         <option value=""> Select Course </option>
-						@php
-							$courses = [
-								'BCA', 'MCA', 'BBA', 'MBA', 'B.Tech', 'M.Tech',
-								'B.Sc', 'M.Sc', 'B.A', 'M.A', 'B.Com', 'M.Com',
-								'B.Ed', 'M.Ed'
-							];
-						@endphp
 						@foreach($courses as $course)
 							<option value="{{ $course }}">{{ $course }}</option>
 						@endforeach
@@ -94,6 +87,13 @@
 				<a href="{{route("admin.courses")}}" class="btn btn btn-default">Reset</a>
 			</div>
 		</div>
+		<div class="row">
+			
+		<div class="col-md-4">
+				<a href="#" class="btn btn-primary" id="filterButton">Apply Now</a>
+			</div>
+		</div>
+
 	</div>
 </div>
 
@@ -200,42 +200,42 @@
                     return row['passout-4'] + '/' + row['fees-4'];
                 }
             },
-            { 
-                "title": "Passout/Fees", 
-                "render": function(data, type, row) {
-                    return row['passout-5'] + '/' + row['fees-5'];
-                }
-            },
-            { 
-                "title": "Passout/Fees", 
-                "render": function(data, type, row) {
-                    return row['passout-6'] + '/' + row['fees-6'];
-                }
-            },
-            { 
-                "title": "Passout/Fees", 
-                "render": function(data, type, row) {
-                    return row['passout-7'] + '/' + row['fees-7'];
-                }
-            },
-            { 
-                "title": "Passout/Fees", 
-                "render": function(data, type, row) {
-                    return row['passout-8'] + '/' + row['fees-8'];
-                }
-            },
-            { 
-                "title": "Passout/Fees", 
-                "render": function(data, type, row) {
-                    return row['passout-9'] + '/' + row['fees-9'];
-                }
-            },
-            { 
-                "title": "Passout/Fees", 
-                "render": function(data, type, row) {
-                    return row['passout-10'] + '/' + row['fees-10'];
-                }
-            },
+            // { 
+            //     "title": "Passout/Fees", 
+            //     "render": function(data, type, row) {
+            //         return row['passout-5'] + '/' + row['fees-5'];
+            //     }
+            // },
+            // { 
+            //     "title": "Passout/Fees", 
+            //     "render": function(data, type, row) {
+            //         return row['passout-6'] + '/' + row['fees-6'];
+            //     }
+            // },
+            // { 
+            //     "title": "Passout/Fees", 
+            //     "render": function(data, type, row) {
+            //         return row['passout-7'] + '/' + row['fees-7'];
+            //     }
+            // },
+            // { 
+            //     "title": "Passout/Fees", 
+            //     "render": function(data, type, row) {
+            //         return row['passout-8'] + '/' + row['fees-8'];
+            //     }
+            // },
+            // { 
+            //     "title": "Passout/Fees", 
+            //     "render": function(data, type, row) {
+            //         return row['passout-9'] + '/' + row['fees-9'];
+            //     }
+            // },
+            // { 
+            //     "title": "Passout/Fees", 
+            //     "render": function(data, type, row) {
+            //         return row['passout-10'] + '/' + row['fees-10'];
+            //     }
+            // },
 		],
 		"rowCallback": function(row, data, index)
 		{

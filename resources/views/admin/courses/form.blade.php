@@ -4,6 +4,9 @@
     @php($childMenu = 'courselist')
 @endif
 
+
+
+
 @extends('layouts.auth-admin', ['parent' => 'courses', 'child' => $childMenu])
 
 @section("content")
@@ -49,11 +52,13 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group required">
-                                        <label>Title</label>
-                                        <input type="text" name="title" id="title" value="{{old('title', @$course->title)}}" class="form-control" maxlength="255" placeholder="Title" required />
-                                        @if($errors->has('title'))
-                                        <div class="error text-danger">{{ $errors->first('title') }}</div>
-                                        @endif
+                                        <label>Course Title</label>
+                                        <select name="title" id="title" class="form-control" placeholder="Course Title" required>
+                                            <option value=""> Select Course </option>
+                                            @foreach($courses as $course)
+                                                <option value="{{ $course }}">{{ $course }}</option>
+                                            @endforeach
+                                        </select>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
@@ -94,13 +99,15 @@
                                         @endif
                                     </div>
                                 </div>
-                                @for ($i = 1; $i <= 10; $i++)
+                                @for ($i = 1; $i <= 4; $i++)
                                 <div class="col-md-12">
                                     <div class="row">
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label>Passout-{{$i}}</label>
-                                                <input type="text" name="passout_{{$i}}" id="passout_{{$i}}" value="{{old('passout_'.$i, @$course['passout_'.$i])}}" class="form-control" maxlength="255" placeholder="Passout-{{$i}}" />
+                                                <input type="text" name="passout_{{$i}}" id="passout_{{$i}}" 
+                                                    value="{{ old('passout_'.$i, $course['passout_'.$i] ?? '') }}" 
+                                                    class="form-control" maxlength="255" placeholder="Passout-{{$i}}" />
                                                 @if($errors->has('passout_'.$i))
                                                 <div class="error text-danger">{{ $errors->first('passout_'.$i) }}</div>
                                                 @endif
@@ -109,7 +116,9 @@
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label>Fees-{{$i}}</label>
-                                                <input type="text" name="fees_{{$i}}" id="fees_{{$i}}" value="{{old('fees_'.$i, @$course['fees_'.$i])}}" class="form-control" maxlength="255" placeholder="Fees-{{$i}}" />
+                                                <input type="text" name="fees_{{$i}}" id="fees_{{$i}}" 
+                                                    value="{{ old('fees_'.$i, $course['fees_'.$i] ?? '') }}" 
+                                                    class="form-control" maxlength="255" placeholder="Fees-{{$i}}" />
                                                 @if($errors->has('fees_'.$i))
                                                 <div class="error text-danger">{{ $errors->first('fees_'.$i) }}</div>
                                                 @endif

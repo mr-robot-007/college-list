@@ -1,4 +1,4 @@
-@extends('layouts.auth-admin', ['parent' => 'courses', 'child' => "courselist"])
+@extends('layouts.auth-admin', ['parent' => 'administration', 'child' => "courselist"])
 
 @push("shared-css")
 <link rel="stylesheet" href="/static/components/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css" />
@@ -125,12 +125,12 @@
 							<th>Passout-2 / Fees-2</th>
 							<th>Passout-3 / Fees-3</th>
 							<th>Passout-4 / Fees-4</th>
-							<th>Passout-5 / Fees-5</th>
+							<!-- <th>Passout-5 / Fees-5</th>
 							<th>Passout-6 / Fees-6</th>
 							<th>Passout-7 / Fees-7</th>
 							<th>Passout-8 / Fees-8</th>
 							<th>Passout-9 / Fees-9</th>
-							<th>Passout-10 / Fees-10</th>
+							<th>Passout-10 / Fees-10</th> -->
 							<th>Status</th>
 							<th style="width:100px;">Action</th>
 						</tr>
@@ -234,42 +234,42 @@ $(document).ready(function()
                     return row['passout-4'] + ' / ' + row['fees-4'];
                 }
             },
-            { 
-                "title": "Passout-5 / Fees-5", 
-                "render": function(data, type, row) {
-                    return row['passout-5'] + ' / ' + row['fees-5'];
-                }
-            },
-            { 
-                "title": "Passout-6 / Fees-6", 
-                "render": function(data, type, row) {
-                    return row['passout-6'] + ' / ' + row['fees-6'];
-                }
-            },
-            { 
-                "title": "Passout-7 / Fees-7", 
-                "render": function(data, type, row) {
-                    return row['passout-7'] + ' / ' + row['fees-7'];
-                }
-            },
-            { 
-                "title": "Passout-8 / Fees-8", 
-                "render": function(data, type, row) {
-                    return row['passout-8'] + ' / ' + row['fees-8'];
-                }
-            },
-            { 
-                "title": "Passout-9 / Fees-9", 
-                "render": function(data, type, row) {
-                    return row['passout-9'] + ' / ' + row['fees-9'];
-                }
-            },
-            { 
-                "title": "Passout-10 / Fees-10", 
-                "render": function(data, type, row) {
-                    return row['passout-10'] + ' / ' + row['fees-10'];
-                }
-            },
+            // { 
+            //     "title": "Passout-5 / Fees-5", 
+            //     "render": function(data, type, row) {
+            //         return row['passout-5'] + ' / ' + row['fees-5'];
+            //     }
+            // },
+            // { 
+            //     "title": "Passout-6 / Fees-6", 
+            //     "render": function(data, type, row) {
+            //         return row['passout-6'] + ' / ' + row['fees-6'];
+            //     }
+            // },
+            // { 
+            //     "title": "Passout-7 / Fees-7", 
+            //     "render": function(data, type, row) {
+            //         return row['passout-7'] + ' / ' + row['fees-7'];
+            //     }
+            // },
+            // { 
+            //     "title": "Passout-8 / Fees-8", 
+            //     "render": function(data, type, row) {
+            //         return row['passout-8'] + ' / ' + row['fees-8'];
+            //     }
+            // },
+            // { 
+            //     "title": "Passout-9 / Fees-9", 
+            //     "render": function(data, type, row) {
+            //         return row['passout-9'] + ' / ' + row['fees-9'];
+            //     }
+            // },
+            // { 
+            //     "title": "Passout-10 / Fees-10", 
+            //     "render": function(data, type, row) {
+            //         return row['passout-10'] + ' / ' + row['fees-10'];
+            //     }
+            // },
 			{ "title": "Status", data: 'status' },
 			{ "title": "Action", data: null },
 		],

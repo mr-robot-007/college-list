@@ -137,7 +137,7 @@ class CourseController extends Controller
                     "university_name"=> Institute::find($course->institute_id)->university_name,
                     "approved_by"=> Institute::find($course->institute_id)->approved_by,
                     "verification"=> Institute::find($course->institute_id)->verification,
-                    "website"=> Institute::find($course->institute_id)->website,
+                    "website"=> Institute::find($course->institute_id)->university_website,
                     "type"=> $course->type,
                     "duration"=> $course->duration,
                     "visit"=> $course->visit,
@@ -180,7 +180,12 @@ class CourseController extends Controller
         $authUser = getRequestAttributes('currentUser');
         $mode = 'Add';
         $institutes = Institute::where('status','Active')->get();
-        return view('admin.courses.form', compact('mode','institutes'));
+        $courses = [
+            'BCA', 'MCA', 'BBA', 'MBA', 'B.Tech', 'M.Tech',
+            'B.Sc', 'M.Sc', 'B.A', 'M.A', 'B.Com', 'M.Com',
+            'B.Ed', 'M.Ed','BPT',
+        ];
+        return view('admin.courses.form', compact('mode','institutes','courses'));
     }
 
 
@@ -197,10 +202,10 @@ class CourseController extends Controller
             'type' => 'max:255',
             'duration' => 'max:255',
             'visit' => 'max:255',
-            'passout_1' => 'max',
-            'passout_2' => 'max',
-            'passout_3' => 'max',
-            'passout_4' => 'max',
+            'passout_1' => 'max:255',
+            'passout_2' => 'max:255',
+            'passout_3' => 'max:255',
+            'passout_4' => 'max:255',
             'passout_5' => 'max:255',
             'passout_6' => 'max:255',
             'passout_7' => 'max:255',
@@ -298,10 +303,9 @@ class CourseController extends Controller
             unauthorizedRedirect();
         }
         $courseID = decryptString($id);
-        $course = Course::with('instructor')->find($courseID);
-        $instructor_name = $course->instructor->first_name ." " . $course->instructor->last_name;
-
-        return view("admin.courses.detail", compact(["course","instructor_name"]));
+        $course = Course::find($courseID);
+        $institute = Institute::find($course->institute_id);
+        return view("admin.courses.detail", compact(["course","institute"]));
     }
 
 
@@ -314,8 +318,13 @@ class CourseController extends Controller
         $mode = "Edit";
         $courseID = decryptString($id);
         $course = Course::find($courseID);
-        $institutes = Institute::where('status','Active')->get();
-        return view("admin.courses.form", compact(["course", "mode","institutes"]));
+        $institutes = Institute::where('status','Active')->get();   
+        $courses = [
+            'BCA', 'MCA', 'BBA', 'MBA', 'B.Tech', 'M.Tech',
+            'B.Sc', 'M.Sc', 'B.A', 'M.A', 'B.Com', 'M.Com',
+            'B.Ed', 'M.Ed','BPT',
+        ];
+        return view("admin.courses.form", compact(["course", "mode","institutes","courses"]));
     }
 
     public function update(Request $request, $id)

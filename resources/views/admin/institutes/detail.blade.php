@@ -42,17 +42,21 @@
 								<dt class="col-xl-2 col-lg-2 col-md-3 col-sm-4">Title</dt>
 								<dd class="col-xl-10 col-lg-10 col-md-9 col-sm-8">{{@$institute->title}}</dd>
 
-								<dt class="col-xl-2 col-lg-2 col-md-3 col-sm-4">Person Name</dt>
-								<dd class="col-xl-10 col-lg-10 col-md-9 col-sm-8">{{@$institute->person_name}}</dd>
-
-								<dt class="col-xl-2 col-lg-2 col-md-3 col-sm-4">Person Contact</dt>
-								<dd class="col-xl-10 col-lg-10 col-md-9 col-sm-8">{{@$institute->person_contact}}</dd>
-
-								<dt class="col-xl-2 col-lg-2 col-md-3 col-sm-4">Address</dt>
-								<dd class="col-xl-10 col-lg-10 col-md-9 col-sm-8">{{@$institute->address}}</dd>
-								
 								<dt class="col-xl-2 col-lg-2 col-md-3 col-sm-4">Status</dt>
 								<dd class="col-xl-10 col-lg-10 col-md-9 col-sm-8">{{@$institute->status}}</dd>
+
+								<dt class="col-xl-2 col-lg-2 col-md-3 col-sm-4">University Name</dt>
+								<dd class="col-xl-10 col-lg-10 col-md-9 col-sm-8">{{@$institute->university_name}}</dd>
+
+								<dt class="col-xl-2 col-lg-2 col-md-3 col-sm-4">Approved By</dt>
+								<dd class="col-xl-10 col-lg-10 col-md-9 col-sm-8">{{@$institute->approved_by}}</dd>
+
+								<dt class="col-xl-2 col-lg-2 col-md-3 col-sm-4">University Website</dt>
+								<dd class="col-xl-10 col-lg-10 col-md-9 col-sm-8">{{@$institute->university_website}}</dd>
+
+								<dt class="col-xl-2 col-lg-2 col-md-3 col-sm-4">Verification</dt>
+								<dd class="col-xl-10 col-lg-10 col-md-9 col-sm-8">{{@$institute->verification}}</dd>
+
 
 							</dl>
 						</div>

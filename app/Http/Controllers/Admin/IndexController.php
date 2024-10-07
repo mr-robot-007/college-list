@@ -137,8 +137,13 @@ class IndexController extends Controller
         //         session()->flash('customAlertMessage',$this->notifyuser('USER_SUBSCRIPTION_EXPIRING_SOON',$lastSubscription->end_date,$endDateWithGrace));
         //     }
         // }
+        $courses = [
+            'BCA', 'MCA', 'BBA', 'MBA', 'B.Tech', 'M.Tech',
+            'B.Sc', 'M.Sc', 'B.A', 'M.A', 'B.Com', 'M.Com',
+            'B.Ed', 'M.Ed','BPT',
+        ];
         $institutes = Institute::where('status','Active')->get();
-        return view('admin.dashboard', compact('institutes'));
+        return view('admin.dashboard', compact('institutes','courses'));
     }
 
     public function logout()
