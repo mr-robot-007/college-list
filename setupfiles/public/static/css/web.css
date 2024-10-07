@@ -1,0 +1,102 @@
+.main-header .navbar-container .show-notification.show:before, .main-header .navbar-container .show.profile-notification:before {
+    content: "";
+    border: 10px solid transparent;
+    border-left-color: #fff;
+    border-top-color: #fff;
+    position: absolute;
+    border-radius: 3px;
+    top: -8px;
+    right: 15px;
+    -webkit-box-shadow: -5px -5px 12px -2px rgba(0,0,0,.3);
+    box-shadow: -5px -5px 12px -2px rgba(0,0,0,.3);
+    -webkit-transform: rotate(45deg);
+    transform: rotate(45deg);
+    z-index: 1002;
+}
+.main-header .navbar-container .show-notification, .main-header .navbar-container .profile-notification {
+    background: #fff;
+    -webkit-box-shadow: 0 0 20px 0 rgba(0,0,0,.3);
+    box-shadow: 0 0 20px 0 rgba(0,0,0,.3);
+    border-radius: 5px;
+    border: none;
+    opacity: 1;
+    position: absolute;
+    left: auto;
+    right: -15px;
+    visibility: visible;
+    overflow: visible;
+    width: 19rem;
+    padding: 15px 0;
+    -webkit-transform: translateY(20px);
+    transform: translateY(20px);
+}
+.main-header .navbar-container .profile-notification li:first-child {
+    padding: 8px 20px;
+}
+.main-header .navbar-container .show-notification li:first-child, .main-header .navbar-container .profile-notification li:first-child {
+    padding: 8px 20px;
+}
+.main-header .navbar-container .profile-notification li {
+    border-top: none;
+    padding: 8px 20px;
+}
+.main-header .navbar-container .show-notification li, .main-header .navbar-container .profile-notification li {
+    line-height: initial;
+    padding: 8px 20px;
+    width: 100%;
+    -webkit-transition: all .3s ease-in-out;
+    transition: all .3s ease-in-out;
+}
+.main-header .navbar-container .nav-left li, .main-header .navbar-container .nav-right li {
+    float: left;
+    line-height: 4.4;
+    padding: 0 20px;
+    cursor: pointer;
+    position: relative;
+}
+.main-header .navbar-container .profile-notification a {
+    font-size: 15px;
+    padding-left: 0;
+}
+.main-header .navbar-container .show-notification a, .header-navbar .navbar-wrapper .navbar-container .header-notification .profile-notification a {
+    color: #333;
+}
+.main-header .navbar-container .nav-left li>a, .main-header .navbar-container .nav-right li>a {
+    font-size: 16px;
+    display: block;
+}
+.main-header .navbar-container .nav-left a, .main-header .navbar-container .nav-right a {
+    padding: 0 0.6rem;
+}
+
+.table .dropdown-menu {padding: 0px!important;}
+.table .dropdown-menu .dropdown-item {padding: .40rem 1rem!important;}
+#filterCourseChatersLists tbody td div.btn-group{ width: 110px!important; }
+
+body { /* Set "my-sec-counter" to 0 */ counter-reset: my-sec-counter; }
+.autoCounterWrapper { /* Set "my-sec-counter" to 0 */ counter-reset: rows-counter; }
+.autoCounter::before { /* Increment "my-sec-counter" by 1 */ counter-increment: my-sec-counter; content: counter(my-sec-counter); }
+.childAutoCounter::before { /* Increment "my-sec-counter" by 1 */ counter-increment: rows-counter; content: counter(rows-counter);}
+.hand {cursor: pointer;}
+.profile {font-size: 16px!important; margin-right: 5px;}
+
+.showHidePasswordWrapper { position: relative; }
+.showHidePasswordWrapper .passwordEventHandler { position: absolute; top: 20px; right: 0; }
+.borderw {border-width: 1px; border-style: solid;}
+.required label:after { content: " *"; color: #FF0000; }
+.required.form-control-danger .form-control { border-bottom-color: #FF0000; color: #FF0000; }
+.required.form-control-danger .form-bar,
+.form-material .required.form-control-danger.form-primary .form-control:focus~.form-bar:after,
+.form-material .required.form-control-danger.form-primary .form-control:focus~.form-bar:before { border-bottom-color: #FF0000; background-color: #FF0000; }
+.form-material .required.form-control-danger.form-primary .form-control:focus~label { color: #FF0000; }
+.form-material .required.form-control-danger.form-primary .form-control:focus~.form-bar:after,
+.form-material .required.form-control-danger.form-primary .form-control:focus~.form-bar:before {
+    background-color: #FF0000;
+}
+.dataTables_processing { padding: 20px 30px; background: #FFFFFF; border: 1px solid #D0D0D0;}
+
+.has-attachment {position: relative;}
+.pos-attachment {position: absolute; top: 40px; right: 10px;}
+
+.maintananceMode h1 {font-size: 60px!important; margin-top: 50px; margin-bottom: 40px; line-height: 65px;}
+.maintananceMode h2 {font-size: 50px!important; margin-top: 50px; margin-bottom: 40px; line-height: 65px;}
