@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Libraries\Auth;
 use App\Models\Course;
+use App\Models\CourseVisitCount;
 use App\Models\Institute;
 use App\Models\User;
 use App\Traits\Notifications;
@@ -20,7 +21,17 @@ class CourseController extends Controller
             unauthorizedRedirect();
         }
         $institutes = Institute::where('status','Active')->get();
-        return view('admin.courses.list', compact('institutes'));
+        $courses = Course::where('status','Active')->pluck('title')->toArray();
+        return view('admin.courses.list', compact('institutes','courses'));
+    }
+    public function coursevisits(Request $request)
+    {
+        if(!is_admin()) {
+            unauthorizedRedirect();
+        }
+        $institutes = Institute::where('status','Active')->get();
+        $courses = Course::where('status','Active')->pluck('title')->toArray();
+        return view('admin.visits.list', compact('institutes','courses'));
     }
 
     public function filter(Request $request)
@@ -127,6 +138,32 @@ class CourseController extends Controller
         $data["recordsTotal"] = $total;
         $data["recordsFiltered"] = $total;
 
+        $currentUserId = decryptString(getRequestAttributes('currentUser')->id);
+
+        if($course_name)
+        {
+            $course = Course::where('title','like', '%'.$course_name.'%')->first();
+            // dd($course);
+            $courseVisitCount = CourseVisitCount::where('user_id', $currentUserId)
+            ->where('course_id', $course->id) // Assuming course_id is passed in the request
+            ->where('status', 'Active') // Assuming there's an 'active' field to check
+            ->first();
+
+        
+            if ($courseVisitCount) {
+                // If an entry exists, increment the visit count
+                $courseVisitCount->visit_count += 1;
+                $courseVisitCount->save();
+            } else {
+                // If no entry exists, create a new one with count 1
+                CourseVisitCount::create([
+                    'user_id' => $currentUserId,
+                    'course_id' => $course->id,
+                    'visit_count' => 1,
+                ]);
+            }      
+        }
+
         if($courses)
         {
             foreach($courses as $course)
@@ -170,6 +207,103 @@ class CourseController extends Controller
 
         return response()->json($data);
     }
+    public function filtervisits(Request $request)
+    {
+        // Log::info($request);
+        $LISTING_PER_PAGE_LIMIT = getConfig('constants', 'LISTING_PER_PAGE_LIMIT');
+        $data["draw"] = $request->input("draw");
+        $data["recordsTotal"] = 0;
+        $data["recordsFiltered"] = 0;
+        $allCourses = array();
+        $data["data"] = $allCourses;
+        $getUserInfo = getRequestAttributes('currentUser');
+        
+        $ordableColumn = array("0"=> "c.user_id", "1"=>"c.course_id","2"=>"c.visit_count");
+        $start = $request->input("start");
+        $length = $request->input("length");
+        $order = $request->input("order");
+        $columns = $request->input("columns");
+        $instituteId = $request->input("institute_id");
+        $course_name = $request->input("course_name");
+        $orderedColumn = (isset($order[0]) && isset($order[0]["column"])) ? $order[0]["column"] : '0';
+        $orderedPref = (isset($order[0]) && isset($order[0]["dir"])) ? $order[0]["dir"] : 'asc';
+
+        $search = $request->input("search");
+        $searchedText = (isset($search["value"]) && $search["value"]!='') ? $search["value"] : '';
+
+        $defaultPerPage = $request->input("length", $LISTING_PER_PAGE_LIMIT);
+        $pageNumber = (($start/$defaultPerPage) + '1');
+
+        $tblcourses = resolve(CourseVisitCount::Class)->tablename();
+
+        // $totalSQL = DB::table($tblcourses.' as c')->select('c.id');
+        // $totalSQL->where("c.status", "Active");
+        // if($searchedText!='')
+        // {
+        //     $totalSQL->where(function($searchedItems) use($searchedText) {
+        //         $searchedItems->orWhere("c.title", "like", "%".$searchedText."%");
+        //         $searchedItems->orWhere("c.status", "like", "%".$searchedText."%");
+        //         $searchedItems->orWhere("c.description", "like", "%".$searchedText."%");
+        //     });
+        // }
+        // for($col=0;$col<count($ordableColumn); $col++)
+        // {
+        //     if(isset($columns[$col]) && isset($columns[$col]["search"]) && isset($columns[$col]["search"]["value"]) && $columns[$col]["search"]["value"]!='')
+        //     {
+        //         $totalSQL->where($ordableColumn[$col], "like", "%".$columns[$col]["search"]["value"]."%");
+        //     }
+        // }
+        // $total = $totalSQL->count();
+        
+        $coursesSQL = DB::table($tblcourses.' as c')->select('c.user_id', 'c.course_id', 'c.visit_count');
+        // $coursesSQL->join('institutes as i', 'c.institute_id', '=', 'i.id');
+        $coursesSQL->where('deleted_at',NULL);
+
+        for($col=0;$col<count($ordableColumn); $col++)
+        {
+            if(isset($columns[$col]) && isset($columns[$col]["search"]) && isset($columns[$col]["search"]["value"]) && $columns[$col]["search"]["value"]!='')
+            {
+                $coursesSQL->where($ordableColumn[$col], "like", "%".$columns[$col]["search"]["value"]."%");
+            }
+        }
+        // if(!is_admin())
+        // {
+        //     $coursesSQL->where('institute_id',$getUserInfo->institute_id);
+        // }
+
+        $total = $coursesSQL->orderBy($ordableColumn[$orderedColumn], $orderedPref)->count();
+        $courses = $coursesSQL->orderBy($ordableColumn[$orderedColumn], $orderedPref)->paginate($defaultPerPage, ['*'], 'page', $pageNumber);
+
+        $data["draw"] = $request->input("draw");
+        $data["recordsTotal"] = $total;
+        $data["recordsFiltered"] = $total;
+
+        $currentUserId = decryptString(getRequestAttributes('currentUser')->id);
+
+        if ($course_name) {
+            $coursesSQL->where("c.title", "like", "%".$course_name."%");
+        }
+
+        // Fetching the data
+        $courses = $coursesSQL->orderBy($ordableColumn[$orderedColumn], $orderedPref)->paginate($defaultPerPage, ['*'], 'page', $pageNumber);
+        // Prepare the response data
+        if ($courses) {
+            foreach ($courses as $course) {
+                $user = User::find($course->user_id); // Fetch user details
+                $courseDetails = Course::find($course->course_id); // Fetch course details
+
+                $allCourses[] = array(
+                    "center_name" => $user ? $user->first_name.' '.$user->last_name : null, // Get user's first name
+                    "course_name" => $courseDetails ? $courseDetails->title : null, // Get course title
+                    "visits"=>$course->visit_count
+                    // ... other course details ...
+                );
+            }
+        }
+        $data["data"] = $allCourses;
+
+        return response()->json($data);
+    }
 
 
     public function create()
@@ -180,12 +314,12 @@ class CourseController extends Controller
         $authUser = getRequestAttributes('currentUser');
         $mode = 'Add';
         $institutes = Institute::where('status','Active')->get();
-        $courses = [
-            'BCA', 'MCA', 'BBA', 'MBA', 'B.Tech', 'M.Tech',
-            'B.Sc', 'M.Sc', 'B.A', 'M.A', 'B.Com', 'M.Com',
-            'B.Ed', 'M.Ed','BPT',
-        ];
-        return view('admin.courses.form', compact('mode','institutes','courses'));
+        // $courses = [
+        //     'BCA', 'MCA', 'BBA', 'MBA', 'B.Tech', 'M.Tech',
+        //     'B.Sc', 'M.Sc', 'B.A', 'M.A', 'B.Com', 'M.Com',
+        //     'B.Ed', 'M.Ed','BPT',
+        // ];
+        return view('admin.courses.form', compact('mode','institutes'));
     }
 
 
@@ -206,22 +340,22 @@ class CourseController extends Controller
             'passout_2' => 'max:255',
             'passout_3' => 'max:255',
             'passout_4' => 'max:255',
-            'passout_5' => 'max:255',
-            'passout_6' => 'max:255',
-            'passout_7' => 'max:255',
-            'passout_8' => 'max:255',
-            'passout_9' => 'max:255',
-            'passout_10' => 'max:255',
+            // 'passout_5' => 'max:255',
+            // 'passout_6' => 'max:255',
+            // 'passout_7' => 'max:255',
+            // 'passout_8' => 'max:255',
+            // 'passout_9' => 'max:255',
+            // 'passout_10' => 'max:255',
             'fees_1' => 'max:255',
             'fees_2' => 'max:255',
             'fees_3' => 'max:255',
             'fees_4' => 'max:255',
-            'fees_5' => 'max:255',
-            'fees_6' => 'max:255',
-            'fees_7' => 'max:255',
-            'fees_8' => 'max:255',
-            'fees_9' => 'max:255',
-            'fees_10' => 'max:255',
+            // 'fees_5' => 'max:255',
+            // 'fees_6' => 'max:255',
+            // 'fees_7' => 'max:255',
+            // 'fees_8' => 'max:255',
+            // 'fees_9' => 'max:255',
+            // 'fees_10' => 'max:255',
         ];
 
         $validateFieldsMessages = [
@@ -234,23 +368,23 @@ class CourseController extends Controller
             'passout_1.max' => 'Passout 1 should be maximum of 255 characters.',
             'passout_2.max' => 'Passout 2 should be maximum of 255 characters.',
             'passout_3.max' => 'Passout 3 should be maximum of 255 characters.',
-            'passout_4.max' => 'Passout 4 should be maximum of 255 characters.',
-            'passout_5.max' => 'Passout 5 should be maximum of 255 characters.',
-            'passout_6.max' => 'Passout 6 should be maximum of 255 characters.',
-            'passout_7.max' => 'Passout 7 should be maximum of 255 characters.',
-            'passout_8.max' => 'Passout 8 should be maximum of 255 characters.',
-            'passout_9.max' => 'Passout 9 should be maximum of 255 characters.',
-            'passout_10.max' => 'Passout 10 should be maximum of 255 characters.',
+            // 'passout_4.max' => 'Passout 4 should be maximum of 255 characters.',
+            // 'passout_5.max' => 'Passout 5 should be maximum of 255 characters.',
+            // 'passout_6.max' => 'Passout 6 should be maximum of 255 characters.',
+            // 'passout_7.max' => 'Passout 7 should be maximum of 255 characters.',
+            // 'passout_8.max' => 'Passout 8 should be maximum of 255 characters.',
+            // 'passout_9.max' => 'Passout 9 should be maximum of 255 characters.',
+            // 'passout_10.max' => 'Passout 10 should be maximum of 255 characters.',
             'fees_1.max' => 'Fees 1 should be maximum of 255 characters.',
             'fees_2.max' => 'Fees 2 should be maximum of 255 characters.',
             'fees_3.max' => 'Fees 3 should be maximum of 255 characters.',
             'fees_4.max' => 'Fees 4 should be maximum of 255 characters.',  
-            'fees_5.max' => 'Fees 5 should be maximum of 255 characters.',
-            'fees_6.max' => 'Fees 6 should be maximum of 255 characters.',
-            'fees_7.max' => 'Fees 7 should be maximum of 255 characters.',
-            'fees_8.max' => 'Fees 8 should be maximum of 255 characters.',
-            'fees_9.max' => 'Fees 9 should be maximum of 255 characters.',
-            'fees_10.max' => 'Fees 10 should be maximum of 255 characters.',
+            // 'fees_5.max' => 'Fees 5 should be maximum of 255 characters.',
+            // 'fees_6.max' => 'Fees 6 should be maximum of 255 characters.',
+            // 'fees_7.max' => 'Fees 7 should be maximum of 255 characters.',
+            // 'fees_8.max' => 'Fees 8 should be maximum of 255 characters.',
+            // 'fees_9.max' => 'Fees 9 should be maximum of 255 characters.',
+            // 'fees_10.max' => 'Fees 10 should be maximum of 255 characters.',
             
         ];
 
@@ -265,22 +399,22 @@ class CourseController extends Controller
         $course->passout_2 = $request->passout_2;
         $course->passout_3 = $request->passout_3;
         $course->passout_4 = $request->passout_4;
-        $course->passout_5 = $request->passout_5;
-        $course->passout_6 = $request->passout_6;
-        $course->passout_7 = $request->passout_7;
-        $course->passout_8 = $request->passout_8;
-        $course->passout_9 = $request->passout_9;
-        $course->passout_10 = $request->passout_10;
+        // $course->passout_5 = $request->passout_5;
+        // $course->passout_6 = $request->passout_6;
+        // $course->passout_7 = $request->passout_7;
+        // $course->passout_8 = $request->passout_8;
+        // $course->passout_9 = $request->passout_9;
+        // $course->passout_10 = $request->passout_10;
         $course->fees_1 = $request->fees_1;
         $course->fees_2 = $request->fees_2;
         $course->fees_3 = $request->fees_3;
         $course->fees_4 = $request->fees_4;
-        $course->fees_5 = $request->fees_5;
-        $course->fees_6 = $request->fees_6;
-        $course->fees_7 = $request->fees_7;
-        $course->fees_8 = $request->fees_8;
-        $course->fees_9 = $request->fees_9;
-        $course->fees_10 = $request->fees_10;
+        // $course->fees_5 = $request->fees_5;
+        // $course->fees_6 = $request->fees_6;
+        // $course->fees_7 = $request->fees_7;
+        // $course->fees_8 = $request->fees_8;
+        // $course->fees_9 = $request->fees_9;
+        // $course->fees_10 = $request->fees_10;
         $course->institute_id = $request->institute_id;
         $course->status = "Active";
         $course->created_by = $userId;
@@ -305,7 +439,13 @@ class CourseController extends Controller
         $courseID = decryptString($id);
         $course = Course::find($courseID);
         $institute = Institute::find($course->institute_id);
-        return view("admin.courses.detail", compact(["course","institute"]));
+        $passouts = [
+            ['passout' => @$course->passout_1, 'fees' => @$course->fees_1],
+            ['passout' => @$course->passout_2, 'fees' => @$course->fees_2],
+            ['passout' => @$course->passout_3, 'fees' => @$course->fees_3],
+            ['passout' => @$course->passout_4, 'fees' => @$course->fees_4],
+        ];
+        return view("admin.courses.detail", compact(["course","institute","passouts"]));
     }
 
 

@@ -1,10 +1,10 @@
 @if(isset($mode) && $mode=='Add')
-    @php($childMenu = 'addinstitute')
+    @php($childMenu = 'institutelist')
 @else
     @php($childMenu = 'institutelist')
 @endif
 
-@extends('layouts.auth-admin', ['parent' => 'institutes', 'child' => $childMenu])
+@extends('layouts.auth-admin', ['parent' => 'administration', 'child' => $childMenu])
 
 @section("content")
 <div class="content-header">

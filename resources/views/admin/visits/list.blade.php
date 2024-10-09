@@ -1,4 +1,4 @@
-@extends('layouts.auth-admin', ['parent' => 'administration', 'child' => "userlist"])
+@extends('layouts.auth-admin', ['parent' => 'administration', 'child' => "visitlist"])
 
 @push("shared-css")
 <link rel="stylesheet" href="/static/components/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css" />
@@ -20,12 +20,12 @@
 	<div class="container-fluid">
 		<div class="row mb-2">
 			<div class="col-sm-6">
-				<h1 class="m-0">Manage Users</h1>
+				<h1 class="m-0">Course Visit Stats</h1>
 			</div>
 			<div class="col-sm-6">
 				<ol class="breadcrumb float-sm-right">
 					<li class="breadcrumb-item"><a href="{{route('admin.dashboard')}}">Home</a></li>
-					<li class="breadcrumb-item active">Users</li>
+					<li class="breadcrumb-item active">Visits</li>
 				</ol>
 			</div>
 		</div>
@@ -34,27 +34,21 @@
 
 <section class="content">
 	<div class="container-fluid">
-	
 		<div class="row">
 			<div class="col-12">
 				@include('shared.messages')
 				
 				<div class="card card-primary">
 					<div class="card-header">
-						@if(is_admin() || is_customer())
-						<a href="{{route('admin.user.new')}}" class="float-right">Add</a>
-						@endif
 						<h3 class="card-title">List</h3>
 					</div>
 					<div class="card-body">
-						<table id="filterUsersLists" class="table table-bordered table-hover">
+						<table id="filterInstitutesLists" class="table table-bordered table-hover">
 						<tfoot>
 						<tr>
-							<th>Name</th>
-							<th>Email</th>
-							<th>Phone</th>
-							<th>Status</th>
-							<th style="width:100px;">Action</th>
+							<th>Center Name</th>
+							<th>Course</th>
+							<th>Visits</th>
 						</tr>
 						</tfoot>
 						</table>
@@ -70,9 +64,9 @@
 <script>
 $(document).ready(function()
 {
-	$('#filterUsersLists tfoot th').each(function()
+	$('#filterInstitutesLists tfoot th').each(function()
 	{
-		let totalCol = $('#filterUsersLists tfoot th').length;
+		let totalCol = $('#filterInstitutesLists tfoot th').length;
 		if($(this).index()<(totalCol-1))
 		{
 			var title = $(this).text();
@@ -80,10 +74,8 @@ $(document).ready(function()
 		}
 	});
 	var userType = "{{$currentUser->type}}";
-	var canEdit = "{{hasPermission('edit-user')}}";
-	var canDelete = "{{hasPermission('delete-user')}}";
 
-	var listTable = $('#filterUsersLists').DataTable({
+	var listTable = $('#filterInstitutesLists').DataTable({
 		"iDisplayLength": 10,
 		"aLengthMenu": [10, 25, 50, 100],
 		'processing': true,
@@ -114,47 +106,17 @@ $(document).ready(function()
                 });
         },
         'ajax': {
-            'url': "{{route('admin.users.filter')}}",
-            'data': function(d) {
-                d.branch_id = $('#branch_name').val();
-				d.institute_id = $('#institute_title').val();
+        	'url': "{{route('admin.visits.filter')}}",
+        	data: {
+                
             }
         },
         "pageLength": 10,
 		'columns': [
-			{ "title": "Name", data: 'name' },
-			{ "title": "Email", data: 'email' },
-			{ "title": "Phone", data: 'phone' },
-			{ "title": "Status", data: 'status' },
-			{ "title": "Action", data: null },
+			{ "title": "Center Name", data: 'center_name' },
+			{ "title": "Course", data: 'course_name' },
+			{ "title": "Visits", data: 'visits' },
 		],
-		"columnDefs": [
-			// {targets: 0, visible: false},
-			{"targets": 4, "data": null, "orderable": false, "searchable": false, render: function(data, type, row, meta)
-                {
-                    if(type === 'display')
-                    {
-                        data = '<div class="btn-group show">';
-                            data += '<a href="'+hostpath+'users/'+row.hash+'"><button type="submit" class="btn btn-info"><i class="fa fa-regular fa-eye"></i> Info</button></a>';
-                            @if(hasPermission('view-users') || is_customer())
-	                            data += '<button type="button" class="btn btn-info dropdown-toggle dropdown-icon" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <span class="sr-only">Toggle primary</span> </button>';
-	                            data += '<div class="dropdown-menu bg-info">';
-								@if(hasPermission('edit-user') || is_customer())
-									data += '<a href="'+hostpath+'users/'+row.hash+'/edit" class="dropdown-item bg-info">Edit</a>';
-									data += '<a href="'+hostpath+'users/'+row.hash+`/toggleBlock" class="dropdown-item bg-info">${row.status =="Blocked" ? "Unblock":"Block"}</a>`;
-								@endif()
-								@if(hasPermission('delete-user') || is_customer())
-									data += '<form action="'+hostpath+'users/'+row.hash+'" method="POST">{!! method_field("delete") !!} {!! csrf_field() !!}<button type="button" class="dropdown-item bg-danger notifyConfirmForDelete">Remove</button></form>';
-			                    @endif()
-										
-	                            data += '</div>';
-	                        @endif()
-                        data += '</div>';
-                    }
-                    return data;
-                }
-            }
-        ],
 		"rowCallback": function(row, data, index)
 		{
 			if(data.stage == "completed")
@@ -165,12 +127,6 @@ $(document).ready(function()
 				$('td', row).addClass('bg-warning');
 			}
 		}
-    });
-	$('#branch_name').change(function() {
-        listTable.ajax.reload();
-    });
-	$('#institute_title').change(function() {
-        listTable.ajax.reload();
     });
 });
 </script>

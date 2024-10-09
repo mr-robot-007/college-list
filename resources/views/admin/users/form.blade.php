@@ -1,10 +1,10 @@
 @if(isset($mode) && $mode=='Add')
-	@php($childMenu = 'adduser')
+	@php($childMenu = 'userlist')
 @else
 	@php($childMenu = 'userlist')
 @endif
 
-@extends('layouts.auth-admin', ['parent' => 'users', 'child' => $childMenu])
+@extends('layouts.auth-admin', ['parent' => 'administration', 'child' => $childMenu])
 
 @section("content")
 <div class="content-header">
@@ -91,7 +91,7 @@
 								<div class="col-md-6">
 									<div class="form-group">
 										<label>Phone</label>
-										<input type="text" name="phone" id="phone" value="{{old('phone', @$user->phone)}}" class="form-control" placeholder="Phone" maxlength="100" required />
+										<input type="text" name="phone" id="phone" value="{{old('phone', @$user->phone)}}" class="form-control" placeholder="Phone" maxlength="100" />
 										@if($errors->has('phone'))
 			                            <div class="error text-danger">{{ $errors->first('phone') }}</div>
 			                            @endif

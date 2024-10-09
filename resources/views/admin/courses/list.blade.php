@@ -63,13 +63,6 @@
 					<label>Course</label>
 					<select name="course_name" id="course_name" class="form-control" placeholder="Course Title" required>
                         <option value=""> Select Course </option>
-						@php
-							$courses = [
-								'BCA', 'MCA', 'BBA', 'MBA', 'B.Tech', 'M.Tech',
-								'B.Sc', 'M.Sc', 'B.A', 'M.A', 'B.Com', 'M.Com',
-								'B.Ed', 'M.Ed'
-							];
-						@endphp
 						@foreach($courses as $course)
 							<option value="{{ $course }}">{{ $course }}</option>
 						@endforeach

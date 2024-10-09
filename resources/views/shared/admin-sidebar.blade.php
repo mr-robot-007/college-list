@@ -23,8 +23,8 @@
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="{{route('admin.users')}}" class="nav-link ml-3 {{((@$parent=='users' && @$child=='userlist') ? 'active' : '')}}">
-                                <i class="far fa-circle {{((@$parent=='users' && @$child=='userlist') ? 'text-danger' : 'text-info')}}"></i>
+                            <a href="{{route('admin.users')}}" class="nav-link ml-3 {{((@$parent=='administration' && @$child=='userlist') ? 'active' : '')}}">
+                                <i class="far fa-circle {{((@$parent=='administration' && @$child=='userlist') ? 'text-danger' : 'text-info')}}"></i>
                                 <p class="ml-2">Users</p>
                             </a>
                         </li>
@@ -38,6 +38,12 @@
                             <a href="{{route('admin.courses')}}" class="nav-link ml-3 {{((@$parent=='administration' && @$child=='courselist') ? 'active' : '')}}">
                                 <i class="far fa-circle {{((@$parent=='administration' && @$child=='courselist') ? 'text-danger' : 'text-info')}}"></i>
                                 <p class="ml-2">Courses</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{route('admin.visits')}}" class="nav-link ml-3 {{((@$parent=='administration' && @$child=='visitlist') ? 'active' : '')}}">
+                                <i class="far fa-circle {{((@$parent=='administration' && @$child=='visitlist') ? 'text-danger' : 'text-info')}}"></i>
+                                <p class="ml-2">Course Visits</p>
                             </a>
                         </li>
                     </ul>

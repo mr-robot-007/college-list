@@ -1,5 +1,5 @@
 @if(isset($mode) && $mode=='Add')
-    @php($childMenu = 'addcourse')
+    @php($childMenu = 'courselist')
 @else
     @php($childMenu = 'courselist')
 @endif
@@ -7,7 +7,7 @@
 
 
 
-@extends('layouts.auth-admin', ['parent' => 'courses', 'child' => $childMenu])
+@extends('layouts.auth-admin', ['parent' => 'administration', 'child' => $childMenu])
 
 @section("content")
 <div class="content-header">
@@ -53,12 +53,7 @@
                                 <div class="col-md-6">
                                     <div class="form-group required">
                                         <label>Course Title</label>
-                                        <select name="title" id="title" class="form-control" placeholder="Course Title" required>
-                                            <option value=""> Select Course </option>
-                                            @foreach($courses as $course)
-                                                <option value="{{ $course }}">{{ $course }}</option>
-                                            @endforeach
-                                        </select>
+                                        <input type="text" name="title" id="title" value="{{old('title', @$course->title)}}" class="form-control" maxlength="255" placeholder="Course Title" required />
                                     </div>
                                 </div>
                                 <div class="col-md-6">

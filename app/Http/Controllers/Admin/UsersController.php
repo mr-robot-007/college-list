@@ -311,11 +311,12 @@ class UsersController extends Controller
     public function profile_update(Request $request)
     {
         $authUser = getRequestAttributes('currentUser');
+        $userId = decryptString($authUser->id);
         $validateFields = [
             'first_name'=> 'required|max:100',
             'last_name'=> 'required|max:100',
-            'email'=> 'required|max:250|email|unique:users,email,'.$authUser->id.',id',
-            'username'=> 'required|max:100|unique:users,username,'.$authUser->id.',id',
+            'email'=> 'required|max:250|email|unique:users,email,'.$userId.',id',
+            'username'=> 'required|max:100|unique:users,username,'.$userId.',id',
         ];
 
         $validateFieldsMessages = [
@@ -341,7 +342,6 @@ class UsersController extends Controller
         if($request->password!='') $user->password = $request->password;
         $user->phone = $request->phone;
         $user->phone = $request->phone;
-        $user->address = $request->address;
         if($user->save())
         {
             resolve(Auth::Class)->refreshUserCache($user);

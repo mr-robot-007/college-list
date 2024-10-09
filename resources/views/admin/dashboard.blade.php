@@ -69,19 +69,6 @@
                     </select>
 				</div>
 			</div>
-			@if(is_admin())
-			<div class="col-md-4">
-				<div class="form-group required">
-					<label>University</label>
-					<select name="institute_id" id="institute_title" class="form-control" placeholder="Institute Title" required>
-                        <option value=""> Select University </option>
-                        @foreach ($institutes as $institute )
-                            <option value ="{{$institute->id}}">{{$institute->university_name}}</option>
-                        @endforeach
-                    </select>
-				</div>
-			</div>
-			@endif
 			<div class="col-md-2">
 				<label>&nbsp;</label><br />
 				<a href="{{route("admin.courses")}}" class="btn btn btn-default">Reset</a>
@@ -90,7 +77,7 @@
 		<div class="row">
 			
 		<div class="col-md-4">
-				<a href="#" class="btn btn-primary" id="filterButton">Apply Now</a>
+				<a href="https://forms.gle/AUrEeER1aVGomsUu8" target="_blank" class="btn btn-primary" id="filterButton">Add Admission</a>
 			</div>
 		</div>
 
