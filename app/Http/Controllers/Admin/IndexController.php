@@ -137,7 +137,7 @@ class IndexController extends Controller
         //         session()->flash('customAlertMessage',$this->notifyuser('USER_SUBSCRIPTION_EXPIRING_SOON',$lastSubscription->end_date,$endDateWithGrace));
         //     }
         // }
-        $courses = Course::where('status','Active')->pluck('title')->toArray();
+        $courses = Course::where('status','Active')->distinct('title')->pluck('title')->toArray();
         $institutes = Institute::where('status','Active')->get();
         return view('admin.dashboard', compact('institutes','courses'));
     }
