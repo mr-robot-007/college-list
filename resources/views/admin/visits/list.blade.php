@@ -49,6 +49,7 @@
 							<th>Center Name</th>
 							<th>Course</th>
 							<th>Visits</th>
+							<th>Last Visited</th>
 						</tr>
 						</tfoot>
 						</table>
@@ -116,6 +117,7 @@ $(document).ready(function()
 			{ "title": "Center Name", data: 'center_name' },
 			{ "title": "Course", data: 'course_name' },
 			{ "title": "Visits", data: 'visits' },
+			{ "title": "Last Visit", data: 'last_visited' },
 		],
 		"rowCallback": function(row, data, index)
 		{

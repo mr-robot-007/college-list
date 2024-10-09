@@ -257,7 +257,7 @@ class CourseController extends Controller
         // }
         // $total = $totalSQL->count();
         
-        $coursesSQL = DB::table($tblcourses.' as c')->select('c.user_id', 'c.course_id', 'c.visit_count');
+        $coursesSQL = DB::table($tblcourses.' as c')->select('c.user_id', 'c.course_id', 'c.visit_count','c.updated_at');
         // $coursesSQL->join('institutes as i', 'c.institute_id', '=', 'i.id');
         $coursesSQL->where('deleted_at',NULL);
 
@@ -293,13 +293,17 @@ class CourseController extends Controller
             foreach ($courses as $course) {
                 $user = User::find($course->user_id); // Fetch user details
                 $courseDetails = Course::find($course->course_id); // Fetch course details
+                // only add it if courses is not deleted
+                if($courseDetails)
+                {
 
-                $allCourses[] = array(
-                    "center_name" => $user ? $user->first_name.' '.$user->last_name : null, // Get user's first name
-                    "course_name" => $courseDetails ? $courseDetails->title : null, // Get course title
-                    "visits"=>$course->visit_count
-                    // ... other course details ...
-                );
+                    $allCourses[] = array(
+                        "center_name" => $user ? $user->first_name.' '.$user->last_name : null, // Get user's first name
+                        "course_name" => $courseDetails ? $courseDetails->title : null, // Get course title
+                        "visits"=>$course->visit_count,
+                        "last_visited"=>$course->updated_at
+                    );
+                }
             }
         }
         $data["data"] = $allCourses;
@@ -594,6 +598,6 @@ class CourseController extends Controller
         $course->delete();
         session()->flash('success', $this->notifyuser("COURSE_DELETED"));
 
-        return redirect()->route('admin.course.list');
+        return redirect()->route('admin.courses');
     }
 }
