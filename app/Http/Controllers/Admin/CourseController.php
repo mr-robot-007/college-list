@@ -21,7 +21,7 @@ class CourseController extends Controller
             unauthorizedRedirect();
         }
         $institutes = Institute::where('status','Active')->get();
-        $courses = Course::where('status','Active')->pluck('title')->toArray();
+        $courses = Course::where('status','Active')->distinct('title    ')->pluck('title')->toArray();
         return view('admin.courses.list', compact('institutes','courses'));
     }
     public function coursevisits(Request $request)
