@@ -19,7 +19,7 @@
 <div class="login-box">
   <div class="card card-outline card-primary">
     <div class="card-header text-center">
-      <a href="{{route('admin.login')}}" class="h1"><b>Naman</b>MCQ Vessel</a>
+      <a href="{{route('admin.login')}}" class="h1"><b>Naman</b>College List</a>
     </div>
     <div class="card-body">
       <p class="login-box-msg">You are only one step a way from your new password, recover your password now.</p>
