@@ -114,6 +114,7 @@
 							<th>Type</th>
 							<th>Duration</th>
 							<th>Visit</th>
+							<th>Eligibility</th>
 							<th>Passout-1 / Fees-1</th>
 							<th>Passout-2 / Fees-2</th>
 							<th>Passout-3 / Fees-3</th>
@@ -203,6 +204,7 @@ $(document).ready(function()
 			{ "title": "Type", data: 'type' },
 			{ "title": "Duration", data: 'duration' },
 			{ "title": "Visit", data: 'visit' },
+			{ "title": "Eligibility", data:'eligibility'},
 			{ 
                 "title": "Passout-1 / Fees-1", 
                 "render": function(data, type, row) {

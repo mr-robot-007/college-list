@@ -26,6 +26,7 @@ class Course extends Model
         'passout_8',
         'passout_9',
         'passout_10',
+        'eligibility',
         'fees_1',
         'fees_2',
         'fees_3',

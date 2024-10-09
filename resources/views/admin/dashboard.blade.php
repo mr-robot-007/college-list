@@ -91,12 +91,9 @@
 				@include('shared.messages')
 				
 				<div class="card card-primary">
-					@if(hasPermission('add-course') || is_customer())
 					<div class="card-header">
-						<a href="{{route('admin.course.new')}}" class="float-right">Add</a>
 						<h3 class="card-title">List</h3>
 					</div>
-					@endif
 					<div class="card-body">
 						<table id="filterInstitutesLists" class="table table-bordered table-hover">
 						</table>
@@ -162,6 +159,7 @@
 			{ "title": "Title", data: 'title' },
 			{ "title": "Type", data: 'type' },
 			{ "title": "Duration", data: 'duration' },
+			{ "title": "Eligibility", data:'eligibility'},
 			{ "title": "Visit", data: 'visit' },
 			{ 
                 "title": "Passout/Fees", 

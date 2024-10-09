@@ -94,6 +94,15 @@
                                         @endif
                                     </div>
                                 </div>
+                                <div class="col-md-6">
+                                    <div class="form-group required">
+                                        <label>Eligibility</label>
+                                        <input type="text" name="eligibility" id="eligibility" value="{{old('eligibility', @$course->visit)}}" class="form-control" maxlength="255" placeholder="Eligibility" required />
+                                        @if($errors->has('eligibility'))
+                                        <div class="error text-danger">{{ $errors->first('eligibility') }}</div>
+                                        @endif
+                                    </div>
+                                </div>
                                 @for ($i = 1; $i <= 4; $i++)
                                 <div class="col-md-12">
                                     <div class="row">

@@ -45,7 +45,7 @@ class CourseController extends Controller
         $data["data"] = $allCourses;
         $getUserInfo = getRequestAttributes('currentUser');
         
-        $ordableColumn = array("0"=> "c.title", "1"=>"c.duration","2"=>"c.status","3"=>"c.type","4"=>"c.visit","5"=>"c.passout_1","6"=>"c.passout_2","7"=>"c.passout_3","8"=>"c.passout_4","9"=>"c.passout_5","10"=>"c.passout_6","11"=>"c.passout_7","12"=>"c.passout_8","13"=>"c.passout_9","14"=>"c.passout_10","15"=>"c.fees_1","16"=>"c.fees_2","17"=>"c.fees_3","18"=>"c.fees_4","19"=>"c.fees_5","20"=>"c.fees_6","21"=>"c.fees_7","22"=>"c.fees_8","23"=>"c.fees_9","24"=>"c.fees_10");
+        $ordableColumn = array("0"=> "c.title", "1"=>"c.duration","2"=>"c.status","3"=>"c.type","4"=>"c.visit","5"=>"c.passout_1","6"=>"c.passout_2","7"=>"c.passout_3","8"=>"c.passout_4","9"=>"c.passout_5","10"=>"c.passout_6","11"=>"c.passout_7","12"=>"c.passout_8","13"=>"c.passout_9","14"=>"c.passout_10","15"=>"c.fees_1","16"=>"c.fees_2","17"=>"c.fees_3","18"=>"c.fees_4","19"=>"c.fees_5","20"=>"c.fees_6","21"=>"c.fees_7","22"=>"c.fees_8","23"=>"c.fees_9","24"=>"c.fees_10","25"=>"c.eligibility");
         $start = $request->input("start");
         $length = $request->input("length");
         $order = $request->input("order");
@@ -82,7 +82,7 @@ class CourseController extends Controller
         // }
         // $total = $totalSQL->count();
         
-        $coursesSQL = DB::table($tblcourses.' as c')->select('c.id', 'c.title', 'c.type', 'c.duration', 'c.visit', 'c.passout_1', 'c.passout_2', 'c.passout_3', 'c.passout_4', 'c.passout_5', 'c.passout_6', 'c.passout_7', 'c.passout_8', 'c.passout_9', 'c.passout_10', 'c.fees_1', 'c.fees_2', 'c.fees_3', 'c.fees_4', 'c.fees_5', 'c.fees_6', 'c.fees_7', 'c.fees_8', 'c.fees_9', 'c.fees_10', 'c.status', 'c.institute_id');
+        $coursesSQL = DB::table($tblcourses.' as c')->select('c.id', 'c.title', 'c.type', 'c.duration', 'c.visit', 'c.passout_1', 'c.passout_2', 'c.passout_3', 'c.passout_4', 'c.passout_5', 'c.passout_6', 'c.passout_7', 'c.passout_8', 'c.passout_9', 'c.passout_10', 'c.fees_1', 'c.fees_2', 'c.fees_3', 'c.fees_4', 'c.fees_5', 'c.fees_6', 'c.fees_7', 'c.fees_8', 'c.fees_9', 'c.fees_10', 'c.status', 'c.institute_id','c.eligibility');
         // $coursesSQL->join('institutes as i', 'c.institute_id', '=', 'i.id');
         $coursesSQL->where('deleted_at',NULL);
         if($searchedText!='')
@@ -93,6 +93,7 @@ class CourseController extends Controller
                 $searchedItems->orWhere("c.type", "like", "%".$searchedText."%");
                 $searchedItems->orWhere("c.duration", "like", "%".$searchedText."%");
                 $searchedItems->orWhere("c.visit", "like", "%".$searchedText."%");
+                $searchedItems->orWhere("c.eligibility", "like", "%".$searchedText."%");
                 $searchedItems->orWhere("c.passout_1", "like", "%".$searchedText."%");
                 $searchedItems->orWhere("c.passout_2", "like", "%".$searchedText."%");
                 $searchedItems->orWhere("c.passout_3", "like", "%".$searchedText."%");
@@ -178,6 +179,7 @@ class CourseController extends Controller
                     "type"=> $course->type,
                     "duration"=> $course->duration,
                     "visit"=> $course->visit,
+                    "eligibility"=> $course->eligibility,
                     "passout-1"=> $course->passout_1,
                     "passout-2"=> $course->passout_2,
                     "passout-3"=> $course->passout_3,
@@ -339,7 +341,6 @@ class CourseController extends Controller
             'passout_1' => 'max:255',
             'passout_2' => 'max:255',
             'passout_3' => 'max:255',
-            'passout_4' => 'max:255',
             // 'passout_5' => 'max:255',
             // 'passout_6' => 'max:255',
             // 'passout_7' => 'max:255',
@@ -395,6 +396,7 @@ class CourseController extends Controller
         $course->type = $request->type;
         $course->duration = $request->duration;
         $course->visit = $request->visit;
+        $course->eligibility = $request->eligibility;
         $course->passout_1 = $request->passout_1;
         $course->passout_2 = $request->passout_2;
         $course->passout_3 = $request->passout_3;
@@ -539,6 +541,7 @@ class CourseController extends Controller
         $course->type = $request->type;
         $course->duration = $request->duration;
         $course->visit = $request->visit;
+        $course->eligibility = $request->eligibility;
         $course->passout_1 = $request->passout_1;
         $course->passout_2 = $request->passout_2;
         $course->passout_3 = $request->passout_3;
