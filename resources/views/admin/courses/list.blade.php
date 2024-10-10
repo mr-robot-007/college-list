@@ -22,7 +22,6 @@
     }
     #filterInstitutesLists th,
     #filterInstitutesLists td {
-        white-space: nowrap;
         padding: 0.5rem;
     }
     .dataTables_wrapper .dataTables_scroll {
@@ -160,10 +159,14 @@ $(document).ready(function()
 		'processing': true,
 		'serverSide': true,
 		'serverMethod': 'get',
-		'scrollCollapse': true,
+		'scrollCollapse': false,
 		'scrollY': false,
 		'scrollX': true,		
-		'responsive': false,
+		'responsive': {
+			details: {
+				type: 'column' // Customize how details are shown
+			}
+    	},
 		"autoWidth": false,
 		"lengthChange": true,
 		'order': [[1, 'asc']],
@@ -271,7 +274,6 @@ $(document).ready(function()
 			{ "title": "Action", data: null },
 		],
 		"columnDefs": [
-			// {targets: 0, visible: false},
 			{"targets": -1, "data": null, "orderable": false, "searchable": false, render: function(data, type, row, meta)
                 {
                     if(type === 'display')
