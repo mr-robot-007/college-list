@@ -144,7 +144,11 @@ class IndexController extends Controller
 
     public function logout()
     {
-        resolve(Auth::Class)->expireCurrentUser();
+        $currentUser = getRequestAttributes('currentUser');
+        // dd($currentUser);
+        if($currentUser) {
+            resolve(Auth::Class)->expireCurrentUser();
+        }
         return redirect()->route('admin.login');
     }
 
