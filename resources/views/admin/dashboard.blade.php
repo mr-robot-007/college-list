@@ -194,7 +194,7 @@
 		'ordering': false,  // Disable ordering
 		"columnDefs": [
 			{
-				targets: [1, 3], // Specify column indexes to hide on mobile
+				targets: [-1], // Specify column indexes to hide on mobile
 				visible: false,
 				responsivePriority: 2 // This makes the columns hidden on smaller devices
 			},
