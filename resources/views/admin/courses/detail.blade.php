@@ -44,6 +44,9 @@
 								<dt class="col-xl-2 col-lg-2 col-md-3 col-sm-4">Title</dt>
 								<dd class="col-xl-10 col-lg-10 col-md-9 col-sm-8">{{@$course->title}}</dd>
 
+								<dt class="col-xl-2 col-lg-2 col-md-3 col-sm-4">Subject</dt>
+								<dd class="col-xl-10 col-lg-10 col-md-9 col-sm-8">{{@$course->subject}}</dd>
+
 								<dt class="col-xl-2 col-lg-2 col-md-3 col-sm-4">Status</dt>
 								<dd class="col-xl-10 col-lg-10 col-md-9 col-sm-8">{{@$course->status}}</dd>
 

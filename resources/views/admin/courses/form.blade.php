@@ -57,6 +57,12 @@
                                     </div>
                                 </div>
                                 <div class="col-md-6">
+                                    <div class="form-group required">
+                                        <label>Subject</label>
+                                        <input type="text" name="subject" id="subject" value="{{old('subject', @$course->subject)}}" class="form-control" maxlength="255" placeholder="Course Subject" required />
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
 									<div class="form-group required">
 										<label>University</label>
 										<select name="institute_id" id="institute_id" value="{{old('institute_id', @$institute_id)}}" class="form-control" placeholder="Instructor Name" required>

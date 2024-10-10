@@ -110,7 +110,8 @@
 						<tr>
 							<th>S.No.</th>
 							<th>University Name</th>
-							<th>Title</th>	
+							<th>Course</th>	
+							<th>Subject</th>
 							<th>Type</th>
 							<th>Duration</th>
 							<th>Visit</th>
@@ -200,7 +201,8 @@ $(document).ready(function()
                 }
             },
 			{ "title": "University Name", data: 'university_name' },
-			{ "title": "Title", data: 'title' },
+			{ "title": "Course", data: 'title' },
+			{ "title": "Subject", data: 'subject' },
 			{ "title": "Type", data: 'type' },
 			{ "title": "Duration", data: 'duration' },
 			{ "title": "Visit", data: 'visit' },

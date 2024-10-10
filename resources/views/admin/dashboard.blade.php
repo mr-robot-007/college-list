@@ -36,6 +36,21 @@
     #filterInstitutesLists td:first-child {
         font-weight: bold;
     }
+
+	@media (max-width: 768px) {
+    #filterInstitutesLists {
+        font-size: 12px; /* Reduce font size */
+    }
+    #filterInstitutesLists th,
+    #filterInstitutesLists td {
+        padding: 2px; /* Reduce padding */
+    }
+    .table thead th {
+        white-space: wrap; /* Prevent column headers from wrapping */
+		vertical-align: middle;
+    }
+	
+}
 	
 	
 </style>
@@ -69,10 +84,10 @@
                     </select>
 				</div>
 			</div>
-			<div class="col-md-2">
+			<!-- <div class="col-md-2">
 				<label>&nbsp;</label><br />
 				<a href="{{route("admin.courses")}}" class="btn btn btn-default">Reset</a>
-			</div>
+			</div> -->
 		</div>
 		<div class="row">
 			
@@ -95,8 +110,27 @@
 						<h3 class="card-title">List</h3>
 					</div>
 					<div class="card-body">
+					<div class="table-responsive">
 						<table id="filterInstitutesLists" class="table table-bordered table-hover">
+							<thead>
+								<th>S No.</th>
+								<th>University Name</th>
+								<th>Approved By</th>
+								<th>Verification</th>
+								<th>Website</th>
+								<th>Course</th>
+								<th>Subject</th>
+								<th>Type</th>
+								<th>Duration</th>
+								<th>Eligibility</th>
+								<th>Visit</th>
+								<th>Passout/Fees</th>
+								<th>Passout/Fees</th>
+								<th>Passout/Fees</th>
+								<th>Passout/Fees</th>
+							</thead>
 						</table>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -120,7 +154,18 @@
 			$(this).html('<input type="text" placeholder="Search ' + title + '" />');
 		}
 	});
+	$(window).on('resize', function() {
+		if ($(window).width() <= 768) {
+			$('#filterInstitutesLists').css('font-size', '12px');
+			$('#filterInstitutesLists th, #filterInstitutesLists td').css('padding', '4px');
+		} else {
+			$('#filterInstitutesLists').css('font-size', '');
+			$('#filterInstitutesLists th, #filterInstitutesLists td').css('padding', '');
+		}
+	}).trigger('resize');
+	
 	var userType = "{{$currentUser->type}}";
+
 
 	var listTable = $('#filterInstitutesLists').DataTable({
 		"iDisplayLength": 10,
@@ -134,7 +179,20 @@
 		'responsive': false,
 		"autoWidth": false,
 		"lengthChange": true,
-		'order': [[1, 'asc']],
+		// 'order': [[1, 'asc']],
+		'ordering': false,  // Disable ordering
+		"columnDefs": [
+			{
+				targets: [1, 3], // Specify column indexes to hide on mobile
+				visible: false,
+				responsivePriority: 2 // This makes the columns hidden on smaller devices
+			},
+			{
+				targets: '_all',
+				className: 'dt-head-center dt-body-center', // Center-align all cells
+				defaultContent: '-' // Placeholder for empty cells
+			}
+		],
 		
         'ajax': {
         	'url': "{{route('admin.courses.filter')}}",
@@ -156,7 +214,8 @@
 			{ "title": "Approved By", data: 'approved_by' },
 			{ "title": "Verification", data: 'verification' },
 			{ "title": "Website", data: 'website' },
-			{ "title": "Title", data: 'title' },
+			{ "title": "Course", data: 'title' },
+			{ "title": "Subject", data: 'subject' },
 			{ "title": "Type", data: 'type' },
 			{ "title": "Duration", data: 'duration' },
 			{ "title": "Eligibility", data:'eligibility'},
