@@ -169,7 +169,6 @@ $(document).ready(function()
     	},
 		"autoWidth": false,
 		"lengthChange": true,
-		'order': [[1, 'asc']],
 		initComplete: function()
 		{
 			this.api()

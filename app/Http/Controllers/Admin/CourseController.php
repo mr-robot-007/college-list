@@ -133,9 +133,10 @@ class CourseController extends Controller
             $coursesSQL->where("c.title", "like", "%".$course_name."%");
         }
 
-        $total = $coursesSQL->orderBy($ordableColumn[$orderedColumn], $orderedPref)->count();
-        $courses = $coursesSQL->orderBy($ordableColumn[$orderedColumn], $orderedPref)->paginate($defaultPerPage, ['*'], 'page', $pageNumber);
+        $total = $coursesSQL->orderBy('c.id', $orderedPref)->count();
+        $courses = $coursesSQL->orderBy('c.id', $orderedPref)->paginate($defaultPerPage, ['*'], 'page', $pageNumber);
 
+        // dd($courses);
         $data["draw"] = $request->input("draw");
         $data["recordsTotal"] = $total;
         $data["recordsFiltered"] = $total;

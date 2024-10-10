@@ -84,10 +84,21 @@
                     </select>
 				</div>
 			</div>
-			<!-- <div class="col-md-2">
-				<label>&nbsp;</label><br />
-				<a href="{{route("admin.courses")}}" class="btn btn btn-default">Reset</a>
-			</div> -->
+			<div class="col-md-4">
+				<div class="form-group required">
+					<label>University</label>
+					<select name="institute_id" id="institute_title" class="form-control" placeholder="Institute Title" required>
+                        <option value=""> Select University </option>
+                        @foreach ($institutes as $institute )
+                            <option value ="{{$institute->id}}">{{$institute->university_name}}</option>
+                        @endforeach
+                    </select>
+				</div>
+			</div>
+			<div class="col-md-2 mb-4 ">
+				<label>&nbsp;</label><br>
+				<a href="{{route("admin.courses")}}" class="btn btn-secondary">Reset</a>
+			</div>
 		</div>
 		<div class="row">
 			
