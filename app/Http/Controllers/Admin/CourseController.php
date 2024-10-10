@@ -130,7 +130,8 @@ class CourseController extends Controller
         //     $coursesSQL->where('institute_id',$getUserInfo->institute_id);
         // }
         if ($course_name) {
-            $coursesSQL->where("c.title", "like", "%".$course_name."%");
+            // $coursesSQL->where("c.title", "like", "%".$course_name."%");
+            $coursesSQL->where("c.title",  $course_name);
         }
 
         $total = $coursesSQL->orderBy('c.id', $orderedPref)->count();
