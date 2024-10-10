@@ -24,6 +24,7 @@
 		<div class="card card-outline card-primary">
 			<!-- div class="card-header text-center"><a href="/" class="h1"><b>My</b>Ojt</a></div -->
 			<div class="card-body">
+				<h5 class="login-box-msg">स्वामी विवेकानंद शिक्षा समिति मैं आपका स्वागत है</h5>
 				<p class="login-box-msg">Sign in to start your session</p>
 				
 				@if(Session::has('success'))
