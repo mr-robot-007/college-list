@@ -19,11 +19,21 @@
 	<link rel="stylesheet" href="/static/components/dist/css/adminlte.min.css">
 </head>
 
+<style>
+
+	#logo {
+		height: 100px;
+		margin-left: 35%;
+		margin-bottom: 20px;
+	}
+</style>
+
 <body class="hold-transition login-page">
 	<div class="login-box">
 		<div class="card card-outline card-primary">
 			<!-- div class="card-header text-center"><a href="/" class="h1"><b>My</b>Ojt</a></div -->
 			<div class="card-body">
+				<img src="/static/logo.jpeg" class="brand-image img-circle elevation-3" id="logo" alt="SVSS">
 				<h5 class="login-box-msg">स्वामी विवेकानंद शिक्षा समिति मैं आपका स्वागत है</h5>
 				<p class="login-box-msg">Sign in to start your session</p>
 				
