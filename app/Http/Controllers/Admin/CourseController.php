@@ -36,6 +36,7 @@ class CourseController extends Controller
 
     public function filter(Request $request)
     {
+        // dd($request->all());
         // Log::info($request);
         $LISTING_PER_PAGE_LIMIT = getConfig('constants', 'LISTING_PER_PAGE_LIMIT');
         $data["draw"] = $request->input("draw");
@@ -132,6 +133,9 @@ class CourseController extends Controller
         if ($course_name) {
             // $coursesSQL->where("c.title", "like", "%".$course_name."%");
             $coursesSQL->where("c.title",  $course_name);
+        }
+        if($instituteId) {
+            $coursesSQL->where("institute_id", $instituteId);
         }
 
         $total = $coursesSQL->orderBy('c.id', $orderedPref)->count();

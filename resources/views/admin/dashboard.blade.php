@@ -195,7 +195,7 @@
 		"columnDefs": [
 			{
 				targets: [-1], // Specify column indexes to hide on mobile
-				visible: false,
+				visible: true,
 				responsivePriority: 2 // This makes the columns hidden on smaller devices
 			},
 			{
