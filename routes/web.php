@@ -76,6 +76,7 @@ Route::Group(["middleware"=> ["authadmin"]], function()
 
 
 		Route::get("/courses/filter", [CourseController::class, "filter"])->name("admin.courses.filter");
+		Route::get("/courses/filterdashboard", [CourseController::class, "filterdashboard"])->name("admin.courses.filterdashboard");
 		Route::get("/visits/filter", [CourseController::class, "filtervisits"])->name("admin.visits.filter");
 		Route::get('/coursevisits',[CourseController::class,'coursevisits'])->name('admin.visits');
 		Route::resource('courses', CourseController::class,[

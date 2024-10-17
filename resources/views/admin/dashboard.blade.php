@@ -206,7 +206,7 @@
 		],
 		
         'ajax': {
-        	'url': "{{route('admin.courses.filter')}}",
+        	'url': "{{route('admin.courses.filterdashboard')}}",
         	'data': function(d) {
                 d.institute_id = $('#institute_title').val();
 				d.course_name = $('#course_name').val();
