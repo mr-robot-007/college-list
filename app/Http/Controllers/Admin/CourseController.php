@@ -430,6 +430,7 @@ class CourseController extends Controller
         $pageNumber = (($start/$defaultPerPage) + '1');
 
         $tblcourses = resolve(CourseVisitCount::Class)->tablename();
+        
 
         // $totalSQL = DB::table($tblcourses.' as c')->select('c.id');
         // $totalSQL->where("c.status", "Active");
@@ -450,17 +451,26 @@ class CourseController extends Controller
         // }
         // $total = $totalSQL->count();
         
-        $coursesSQL = DB::table($tblcourses.' as c')->select('c.user_id', 'c.course_id', 'c.visit_count','c.updated_at');
-        // $coursesSQL->join('institutes as i', 'c.institute_id', '=', 'i.id');
-        $coursesSQL->where('deleted_at',NULL)->orderBy('c.updated_at', 'desc');
+        $coursesSQL = DB::table($tblcourses.' as c')->select('c.user_id', 'c.course_id', 'c.visit_count','c.updated_at','u.first_name')
+        ->join('users as u', 'c.user_id', '=', 'u.id')
+        ->where('c.deleted_at',NULL)->orderBy('c.updated_at', 'desc');
 
-        for($col=0;$col<count($ordableColumn); $col++)
-        {
-            if(isset($columns[$col]) && isset($columns[$col]["search"]) && isset($columns[$col]["search"]["value"]) && $columns[$col]["search"]["value"]!='')
-            {
-                $coursesSQL->where($ordableColumn[$col], "like", "%".$columns[$col]["search"]["value"]."%");
-            }
+        if ($searchedText != '') {
+            $coursesSQL->where(function ($query) use ($searchedText) {
+                $query->where('c.user_id', 'like', '%' . $searchedText . '%')
+                      ->orWhere('c.course_id', 'like', '%' . $searchedText . '%')
+                      ->orWhere('c.visit_count', 'like', '%' . $searchedText . '%')
+                      ->orWhere('u.first_name', 'like', '%' . $searchedText . '%'); // Search by user's first name
+            });
         }
+
+        // for($col=0;$col<count($ordableColumn); $col++)
+        // {
+        //     if(isset($columns[$col]) && isset($columns[$col]["search"]) && isset($columns[$col]["search"]["value"]) && $columns[$col]["search"]["value"]!='')
+        //     {
+        //         $coursesSQL->where($ordableColumn[$col], "like", "%".$columns[$col]["search"]["value"]."%");
+        //     }
+        // }
         // if(!is_admin())
         // {
         //     $coursesSQL->where('institute_id',$getUserInfo->institute_id);
