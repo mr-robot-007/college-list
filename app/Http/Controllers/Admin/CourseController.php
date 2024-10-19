@@ -452,7 +452,7 @@ class CourseController extends Controller
         
         $coursesSQL = DB::table($tblcourses.' as c')->select('c.user_id', 'c.course_id', 'c.visit_count','c.updated_at');
         // $coursesSQL->join('institutes as i', 'c.institute_id', '=', 'i.id');
-        $coursesSQL->where('deleted_at',NULL);
+        $coursesSQL->where('deleted_at',NULL)->orderBy('c.updated_at', 'desc');
 
         for($col=0;$col<count($ordableColumn); $col++)
         {
