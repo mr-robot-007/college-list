@@ -487,7 +487,8 @@ class CourseController extends Controller
                 $user = User::find($course->user_id); // Fetch user details
                 $courseDetails = Course::find($course->course_id); // Fetch course details
                 // only add it if courses is not deleted
-                if($user->type != 'Admin' && $courseDetails)
+                // dd($user);
+                if($user->type == 'User' && $courseDetails)
                 {
 
                     $allCourses[] = array(
