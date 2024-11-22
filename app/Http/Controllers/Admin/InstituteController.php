@@ -265,11 +265,11 @@ class InstituteController extends Controller
         $institute->deleted_by = decryptString($authUser->id);
         $institute->save();
 
-        User::where('institute_id', $instituteID)
-        ->where('status', 'Active')->update(['status' => 'Deleted', 'deleted_by_system' => '1','deleted_by'=>decryptString($authUser->id)]);
+        // User::where('institute_id', $instituteID)
+        // ->where('status', 'Active')->update(['status' => 'Deleted', 'deleted_by_system' => '1','deleted_by'=>decryptString($authUser->id)]);
 
-        User::where('institute_id', $instituteID)
-        ->where('status', 'Active')->delete(); 
+        // User::where('institute_id', $instituteID)
+        // ->where('status', 'Active')->delete(); 
 
         $institute->delete();
         session()->flash('success', $this->notifyuser("INSTITUTE_DELETED"));
