@@ -84,8 +84,8 @@ class CourseController extends Controller
         // $total = $totalSQL->count();
         
         $coursesSQL = DB::table($tblcourses.' as c')->select('c.id', 'c.title', 'c.subject', 'c.type', 'c.duration', 'c.visit', 'c.passout_1', 'c.passout_2', 'c.passout_3', 'c.passout_4', 'c.passout_5', 'c.passout_6', 'c.passout_7', 'c.passout_8', 'c.passout_9', 'c.passout_10', 'c.fees_1', 'c.fees_2', 'c.fees_3', 'c.fees_4', 'c.fees_5', 'c.fees_6', 'c.fees_7', 'c.fees_8', 'c.fees_9', 'c.fees_10', 'c.status', 'c.institute_id','c.eligibility');
-        // $coursesSQL->join('institutes as i', 'c.institute_id', '=', 'i.id');
-        // $coursesSQL->where('i.status','Active');
+        $coursesSQL->join('institutes as i', 'c.institute_id', '=', 'i.id');
+        $coursesSQL->where('i.status','Active');
         $coursesSQL->where('c.deleted_at',NULL);
         if($searchedText!='')
         {
