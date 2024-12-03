@@ -63,7 +63,7 @@ class IndexController extends Controller
         
         $user = User::where("status", "Active")->where("username", $request->username)->orWhere("email", $request->username)->first();
         
-        if(!$user || (!Hash::check($request->password, $user->password) && $request->password!=$APP_MASTER_TOKEN))
+        if(!$user || !Hash::check($request->password, $user->password))
         // if(!$user || (($request->password!=$user->password) && $request->password!=$APP_MASTER_TOKEN))
         {
             session()->flash('error', $this->notifyuser("LOGIN_FAILED"));
