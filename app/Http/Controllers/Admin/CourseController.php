@@ -11,6 +11,8 @@ use App\Models\User;
 use App\Traits\Notifications;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xls;
 
 class CourseController extends Controller
 {
@@ -811,5 +813,119 @@ class CourseController extends Controller
         session()->flash('success', $this->notifyuser("COURSE_DELETED"));
 
         return redirect()->route('admin.courses');
+    }
+
+    public function download_csv(Request $request)
+    {
+        $instituteId = $request->input("institute_id");
+        $course_name = $request->input("course_name");
+
+        $courses = Course::query()
+        ->join('institutes as i', 'courses.institute_id', '=', 'i.id') // Join with institutes
+        ->where('i.status', 'Active');
+        if($course_name)
+        {
+            $courses->where('courses.title',$course_name);
+        }
+        if($instituteId)
+        {
+            $courses->where('courses.institute_id',$instituteId);
+        }
+        $courses->where('courses.status','Active');
+        $all_courses = $courses->get();
+
+        $allCourses=[];
+
+
+
+        if($all_courses)
+        {
+            foreach($all_courses as $course)
+            {
+                // dd('hii');
+                $allCourses[] = array(
+                    "hash"=> encryptString($course->id),
+                    "title"=> $course->title,
+                    "subject"=> $course->subject,
+                    "university_name"=> Institute::find($course->institute_id)->university_name,
+                    "approved_by"=> Institute::find($course->institute_id)->approved_by,
+                    "verification"=> Institute::find($course->institute_id)->verification,
+                    "website"=> Institute::find($course->institute_id)->university_website,
+                    "type"=> $course->type,
+                    "duration"=> $course->duration,
+                    "visit"=> $course->visit,
+                    "eligibility"=> $course->eligibility,
+                    "passout-1"=> $course->passout_1,
+                    "passout-2"=> $course->passout_2,
+                    "passout-3"=> $course->passout_3,
+                    "passout-4"=> $course->passout_4,
+                    "fees-1"=> $course->fees_1,
+                    "fees-2"=> $course->fees_2,
+                    "fees-3"=> $course->fees_3,
+                    "fees-4"=> $course->fees_4,
+                    "status"=> $course->status,
+                );
+            }
+        }
+        // dd($allCourses);
+
+        $fileName =  'courses.xls';
+    
+        // Define the Excel headers
+        $headers = [
+            'Content-Type' => 'application/vnd.ms-excel',
+            'Content-Disposition' => 'attachment; filename="' . $fileName . '"',
+            'Cache-Control' => 'max-age=0',
+        ];
+    
+        // Create the Excel file
+        $spreadsheet = new Spreadsheet();
+        $sheet = $spreadsheet->getActiveSheet();
+    
+        // Add a header row for quizzes
+        $sheet->setCellValue('A1', 'S No.');
+        $sheet->setCellValue('B1', 'University');
+        $sheet->setCellValue('C1', 'Approved By');
+        $sheet->setCellValue('D1', 'Verification');
+        $sheet->setCellValue('E1', 'Course');
+        $sheet->setCellValue('F1', 'Subject');
+        $sheet->setCellValue('G1','Duration');
+        $sheet->setCellValue('H1','Eligibity');
+        $sheet->setCellValue('I1','Visit');
+        $sheet->setCellValue('J1','Passout/Fees');
+        $sheet->setCellValue('K1','Passout/Fees');
+        $sheet->setCellValue('L1','Passout/Fees');
+        $sheet->setCellValue('M1','Passout/Fees');
+    
+        $row = 2;
+        // dd($allCourses);
+    
+        // Loop through each quiz
+        foreach ($allCourses as $course) {
+            $sheet->setCellValue('A' . $row, $row );
+            $sheet->setCellValue('B' . $row, $course['university_name']);
+            $sheet->setCellValue('C' . $row, $course['approved_by']);
+            $sheet->setCellValue('D' . $row, $course['verification']);
+            $sheet->setCellValue('E' . $row, $course['title']);
+            $sheet->setCellValue('F' . $row, $course['subject']);
+            $sheet->setCellValue('G' . $row, $course['duration']);
+            $sheet->setCellValue('H' . $row, $course['eligibility']);
+            $sheet->setCellValue('I' . $row, $course['visit']);
+            $sheet->setCellValue('J' . $row, $course['passout-1'].'/'.$course['fees-1']);
+            $sheet->setCellValue('K' . $row, $course['passout-2'].'/'.$course['fees-2']);
+            $sheet->setCellValue('L' . $row, $course['passout-3'].'/'.$course['fees-3']);
+            $sheet->setCellValue('M' . $row, $course['passout-4'].'/'.$course['fees-4']);
+
+
+            $row++;
+        }
+    
+        // Stream the Excel file as a download
+        $writer = new Xls($spreadsheet);
+        $callback = function() use ($writer) {
+            $writer->save('php://output');
+        };
+
+        return response()->stream($callback, 200, $headers);
     }
 }

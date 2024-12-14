@@ -85,6 +85,10 @@
 				<label>&nbsp;</label><br />
 				<a href="{{route("admin.courses")}}" class="btn btn btn-default">Reset</a>
 			</div>
+			<div class="col-md-2">
+				<label>&nbsp;</label><br />
+				<a target="_blank" href="{{ route('admin.courses.downloadcsv', ['course_name' => '']) }}" class="btn btn btn-primary" id="downloadCsv">Download CSV</a>
+			</div>
 		</div>
 		@endif
 	</div>
@@ -310,6 +314,17 @@ $(document).ready(function()
     });
 	$('#institute_title, #course_name').change(function() {
         listTable.ajax.reload();
+    });
+	
+	$('#downloadCsv').on('click', function(e) {
+        e.preventDefault(); // Prevent the default anchor click behavior
+        var courseName = $('#course_name').val();
+        var instituteId = $('#institute_title').val();
+		
+        // var url = "{{ route('admin.courses.downloadcsv', ['course_name' => ':course_name', 'institute_id' => ':institute_id']) }}";
+        var url = "/downloadcsv?course_name="+courseName + "&institute_id=" + instituteId;
+        url = url.replace(':course_name', courseName).replace(':institute_id', instituteId);
+		window.open(url, '_blank');
     });
 });
 </script>
