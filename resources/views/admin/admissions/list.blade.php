@@ -75,7 +75,7 @@
 				<div class="form-group required">
 					<label>Center</label>
 					<select name="center_id" id="center_id" class="form-control" placeholder="Course Title" required>
-                        <option value=""> Select Course </option>
+                        <option value=""> Select Center </option>
 						@foreach($centers as $center)
 							<option value="{{ $center->id }}">{{ $center->first_name.''.$center->last_name }}</option>
 						@endforeach
