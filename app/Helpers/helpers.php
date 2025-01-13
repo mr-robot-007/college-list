@@ -215,6 +215,16 @@ function is_customer()
 
 	return false;
 }
+function is_center()
+{
+	$currentUser = getRequestAttributes('currentUser');
+	if(isset($currentUser->type) && $currentUser->type=='User')
+	{
+		return true;
+	}
+
+	return false;
+}
 function is_student()
 {
 	$currentUser = getRequestAttributes('currentUser');

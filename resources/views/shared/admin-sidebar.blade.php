@@ -13,7 +13,12 @@
                         <i class="nav-icon fas fa-tachometer-alt"></i>
                         <p>Dashboard </p>
                     </a>
+                    <a href="{{route('admin.admissions')}}" class="nav-link {{((@$parent=='admissions' && @$child=='admissions') ? 'active' : '')}}">
+                        <i class="nav-icon ion ion-stats-bars"></i>
+                        <p>Admissions </p>
+                    </a>
                 </li>
+
 
                 @if(is_admin())
                 <li class="nav-item {{((@$parent=='administration') ? 'menu-open' : '')}}">

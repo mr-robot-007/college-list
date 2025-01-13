@@ -1,10 +1,9 @@
 <?php
 
+use App\Http\Controllers\Admin\AdmissionInfoController;
 use App\Http\Controllers\Admin\CourseController;
 use App\Http\Controllers\Admin\IndexController;
 use App\Http\Controllers\Admin\InstituteController;
-use App\Http\Controllers\Admin\PermissionController;
-use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\UsersController;
 use Illuminate\Support\Facades\Route;
 
@@ -89,6 +88,19 @@ Route::Group(["middleware"=> ["authadmin"]], function()
 		        'edit' => 'admin.course.edit',
 		        'update' => 'admin.course.update',
 		        'destroy' => 'admin.course.delete',
+				]
+			]);
+		Route::get("/admissions/filter", [AdmissionInfoController::class, "filter"])->name("admin.admissions.filter");
+		Route::get("/university/courses/{id}", [AdmissionInfoController::class, "get_university_courses"])->name("admin.university.courses");
+		Route::resource('admissions', AdmissionInfoController::class,[
+			'names'=> [
+				'index' => 'admin.admissions',
+				'create' => 'admin.admission.new',
+		        'store' => 'admin.admission.store',
+		        'show' => 'admin.admission.detail',
+		        'edit' => 'admin.admission.edit',
+		        'update' => 'admin.admission.update',
+		        'destroy' => 'admin.admission.delete',
 			]
 		]);
     }

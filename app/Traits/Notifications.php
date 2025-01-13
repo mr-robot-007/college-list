@@ -96,6 +96,10 @@ trait Notifications
 			"EMAIL_UPDATED"=>"Email successfully updated!",
 			"EMAIL_DELETED"=>"Email successfully deleted!",
 
+			"ADMISSION_ADDED"=>"Admission Info successfully added!",
+			"ADMISSION_UPDATED"=>"Admission Info successfully updated!",
+			"ADMISSION_DELETED"=>"Admission Info successfully deleted!",
+
 
 
 		];
