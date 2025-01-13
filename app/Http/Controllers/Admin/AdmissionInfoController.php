@@ -471,9 +471,9 @@ class AdmissionInfoController extends Controller
         $course->save();
 
         $course->delete();
-        session()->flash('success', $this->notifyuser("COURSE_DELETED"));
+        session()->flash('success', $this->notifyuser("ADMISSION_DELETED"));
 
-        return redirect()->route('admin.courses');
+        return redirect()->route('admin.admissions');
     }
 
     // public function download_csv(Request $request)
