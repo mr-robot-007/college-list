@@ -81,7 +81,7 @@ class UsersController extends Controller
         }
         $total = $totalSQL->count();
         
-        $usersSQL = DB::table($tblusers.' as u')->select('u.id', 'u.first_name', 'u.last_name', DB::raw('concat(first_name, " ", last_name) as fullname'), 'u.email',  'u.status', 'u.type');
+        $usersSQL = DB::table($tblusers.' as u')->select('u.id', 'u.first_name', 'u.last_name', DB::raw('concat(first_name, " ", last_name) as fullname'), 'u.email',  'u.status', 'u.type','u.phone');
         $usersSQL->where('deleted_at',NULL);
         if($searchedText!='')
         {
