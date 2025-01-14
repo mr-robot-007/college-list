@@ -248,7 +248,7 @@ class AdmissionInfoController extends Controller
         // dd('hi');
         $admission = new AdmissionInfo();
         
-        // $admission->center_id = $userId;
+        $admission->center_id = $userId;
         $admission->university_id = $request->university_id;
         $admission->course_id = $request->course_id;
         $admission->passout = $request->passout;
@@ -412,7 +412,7 @@ class AdmissionInfoController extends Controller
         
         if(is_admin())
         {
-            $admission->center_id = $userId;
+            // $admission->center_id = $userId;
             $admission->university_id = $request->university_id;
             $admission->course_id = $request->course_id;
             $admission->passout = $request->passout;

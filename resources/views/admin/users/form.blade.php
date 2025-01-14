@@ -106,9 +106,9 @@
 												<option value=""> Select User Type </option>
 												
 												@if(is_admin())
-												<option value="Admin" {{@$user->type =='Admin'? "selected" : "" }}> Admin </option>
-												<option value="AltAdmin" {{@$user->type =='AltAdmin'? "selected" : "" }} > Alt Admin </option>
-												<option value="User" {{@$user->type =='User'? "selected" : "" }} > User </option>
+												<option value="Admin" {{old('type',@$user->type) =='Admin'? "selected" : "" }}> Admin </option>
+												<option value="AltAdmin" {{old('type',@$user->type) =='AltAdmin'? "selected" : "" }} > Alt Admin </option>
+												<option value="User" {{old('type',@$user->type) =='User'? "selected" : "" }} > User </option>
 												@endif
 											</select>
 										</div>
