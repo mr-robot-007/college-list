@@ -189,8 +189,8 @@
                                                 <label>Fees-{{$i}} Status</label>
                                                 <select name="{{'fees'.$i.'_status'}}" id="{{'fees'.$i.'_status'}}" {{ @$admission['fees'.$i.'_status'] == 'Paid' || @$admission['fees'.$i.'_status'] == 'Approved'  ? $disabled : '' }}
                                                  value="{{old(('fees'.$i.'_status'), 'Pending')}}" class="form-control" placeholder="Instructor Name" required>
-                                                    <option value ="Pending" {{ @$admission['fees'.$i.'_status'] == 'Pending' ? "selected" : ""}}>{{"Pending"}}</option>
-                                                    <option value ="Paid" {{ @$admission['fees'.$i.'_status'] == 'Paid' ? "selected" : ""}}>{{@$admission['fees'.$i.'_status'] == "Approved" ? "Approved" : "Paid"}}</option>
+                                                    <option value ="Pending" {{ @$admission['fees'.$i.'_status'] == 'Pending' ? "selected" : ""}}>{{@$admission['fees'.$i.'_status'] == "Approved" ? "Approved" : "Pending"}}</option>
+                                                    <option value ="Paid" {{ @$admission['fees'.$i.'_status'] == 'Paid' ? "selected" : ""}}>{{"Paid"}}</option>
                                                     @if(is_admin())
                                                     <option value ="Approved" {{ @$admission['fees'.$i.'_status'] == 'Approved' ? "selected" : ""}}>{{"Approved"}}</option>
                                                     @endif()
