@@ -53,6 +53,7 @@
 							<th>Name</th>
 							<th>Email</th>
 							<th>Phone</th>
+							<th>Type</th>
 							<th>Status</th>
 							<th style="width:100px;">Action</th>
 						</tr>
@@ -125,6 +126,7 @@ $(document).ready(function()
 			{ "title": "Name", data: 'name' },
 			{ "title": "Email", data: 'email' },
 			{ "title": "Phone", data: 'phone' },
+			{ "title": "Type", data: 'type' },
 			{ "title": "Status", data: 'status' },
 			{ "title": "Action", data: null },
 		],

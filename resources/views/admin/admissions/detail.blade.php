@@ -33,10 +33,10 @@
 				
 				<div class="card card-primary">
 					<div class="card-header">
-						@if(hasPermission('edit-course') ||is_customer())
+						@if(hasPermission('edit-course') ||is_center())
 						<a href="{{route('admin.admission.edit', [encryptString(@$admission->id)])}}" class="float-right">Edit</a>
 						@endif()
-						<h3 class="card-title">Course Detail</h3>
+						<h3 class="card-title">Admission Detail</h3>
 					</div>
 					<div class="card-body">
 						<div class="card-body">

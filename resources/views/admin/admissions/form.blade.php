@@ -1,3 +1,4 @@
+
 @if(isset($mode) && $mode=='Add')
     @php($childMenu = 'admissions')
 @else
@@ -5,9 +6,9 @@
 @endif
 
 @if(isset($mode) && $mode == 'Edit' && !is_admin())
-    @php($disabled = "disabled");
+    @php($disabled = "disabled")
 @else
-    @php($disabled="");
+    @php($disabled="")
 @endif
 
 

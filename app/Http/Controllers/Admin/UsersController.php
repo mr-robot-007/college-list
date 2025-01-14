@@ -124,7 +124,7 @@ class UsersController extends Controller
                     "hash"=> encryptString($user->id),
                     "name"=> $user->fullname,
                     "email"=> $user->email,
-                    "phone"=> null,
+                    "phone"=> $user->phone,
                     "status"=> $user->status,
                     "type"=> $user->type,
                 );
