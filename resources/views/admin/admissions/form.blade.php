@@ -136,8 +136,9 @@
                                         <label>Enrollment No.</label>
                                         @if(is_admin())
                                             <input type="text" name="enrollment_number" id="enrollment_number" {{$disabled}}  value="{{old('enrollment_number', @$admission->enrollment_number)}}" class="form-control" maxlength="255" placeholder="Enrollment Number" />
-                                        @else
-                                            <span class="form-control">{{@$admission->enrollment_number}}</span>
+                                            @else
+                                            <input type="text" name="e_num" id="e_num" {{$disabled}}  value="{{old('enrollment_number', @$admission->enrollment_number)}}" class="form-control" maxlength="255" placeholder="Enrollment Number" />
+                                            <!-- <span class="form-control" {{$disabled}}>{{@$admission->enrollment_number}}</span> -->
                                         @endif()
                                         @if($errors->has('enrollment_number'))
                                         <div class="error text-danger">{{ $errors->first('enrollment_number') }}</div>
@@ -149,8 +150,9 @@
                                         <label>Roll No.</label>
                                         @if(is_admin())
                                             <input type="text" name="roll_number" id="roll_number" {{$disabled}}  value="{{old('roll_number', @$admission->roll_number)}}" class="form-control" maxlength="255" placeholder="Roll Number" />
-                                        @else
-                                            <span class="form-control">{{@$admission->roll_number}}</span>
+                                            @else
+                                            <!-- <span class="form-control" {{$disabled}}>{{@$admission->roll_number}}</span> -->
+                                            <input type="text" name="r_num" id="r_num" {{$disabled}}  value="{{old('roll_number', @$admission->roll_number)}}" class="form-control" maxlength="255" placeholder="Roll Number" />
                                         @endif()
                                         @if($errors->has('roll_number'))
                                         <div class="error text-danger">{{ $errors->first('roll_number') }}</div>
