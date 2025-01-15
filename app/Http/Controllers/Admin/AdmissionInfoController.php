@@ -206,9 +206,13 @@ class AdmissionInfoController extends Controller
             'student_name' => 'required|max:255',
             'father_name' => 'required|max:255',
             'mother_name' => 'required|max:255',
+            'enrollment_number' => 'nullable|max:255',
+            'roll_number' => 'nullable|max:255',
+            'date_of_birth' => 'required|date',
             'address' => 'required|max:500',
             'mobile' => 'required|digits:10',
             'email' => 'required|email',
+            'notes'=>'nullable|max:2000',
             'fees1_amount'=>'nullable|numeric',
             'fees2_amount'=>'nullable|numeric',
             'fees3_amount'=>'nullable|numeric',
@@ -253,6 +257,10 @@ class AdmissionInfoController extends Controller
         $admission->course_id = $request->course_id;
         $admission->passout = $request->passout;
         $admission->total = $request->total;
+        $admission->dob = $request->date_of_birth;
+        $admission->enrollment_number = $request->enrollment_number;
+        $admission->roll_number = $request->roll_number;
+        $admission->notes = $request->notes;
         $admission->student_name = $request->student_name;
         $admission->father_name = $request->father_name;
         $admission->mother_name = $request->mother_name;
@@ -362,6 +370,9 @@ class AdmissionInfoController extends Controller
             'student_name' => 'required|max:255',
             'father_name' => 'required|max:255',
             'mother_name' => 'required|max:255',
+            'enrollment_number' => 'nullable|max:255',
+            'roll_number' => 'nullable|max:255',
+            'date_of_birth' => 'required|date',
             'address' => 'required|max:500',
             'mobile' => 'required|digits:10',
             'email' => 'required|email',
@@ -420,6 +431,10 @@ class AdmissionInfoController extends Controller
             $admission->student_name = $request->student_name;
             $admission->father_name = $request->father_name;
             $admission->mother_name = $request->mother_name;
+            $admission->enrollment_number = $request->enrollment_number;
+            $admission->roll_number = $request->roll_number;
+            $admission->dob = $request->date_of_birth;
+            $admission->notes = $request->notes;
             $admission->address = $request->address;
             $admission->mobile = $request->mobile;
             $admission->email = $request->email;

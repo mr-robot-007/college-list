@@ -123,6 +123,43 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group required">
+                                        <label>Date of Birth</label>
+                                        <input type="date" name="date_of_birth" id="date_of_birth" {{$disabled}}  value="{{old('date_of_birth', @$admission->date_of_birth)}}" class="form-control" maxlength="255" placeholder="D.O.B" required />
+                                        @if($errors->has('date_of_birth'))
+                                        <div class="error text-danger">{{ $errors->first('date_of_birth') }}</div>
+                                        @endif
+                                    </div>
+                                </div>
+                                @if(@$mode == 'Edit')
+                                <div class="col-md-6">
+                                    <div class="form-group required">
+                                        <label>Enrollment No.</label>
+                                        @if(is_admin())
+                                            <input type="text" name="enrollment_number" id="enrollment_number" {{$disabled}}  value="{{old('enrollment_number', @$admission->enrollment_number)}}" class="form-control" maxlength="255" placeholder="Enrollment Number" />
+                                        @else
+                                            <span class="form-control">{{@$admission->enrollment_number}}</span>
+                                        @endif()
+                                        @if($errors->has('enrollment_number'))
+                                        <div class="error text-danger">{{ $errors->first('enrollment_number') }}</div>
+                                        @endif
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group required">
+                                        <label>Roll No.</label>
+                                        @if(is_admin())
+                                            <input type="text" name="roll_number" id="roll_number" {{$disabled}}  value="{{old('roll_number', @$admission->roll_number)}}" class="form-control" maxlength="255" placeholder="Roll Number" />
+                                        @else
+                                            <span class="form-control">{{@$admission->roll_number}}</span>
+                                        @endif()
+                                        @if($errors->has('roll_number'))
+                                        <div class="error text-danger">{{ $errors->first('roll_number') }}</div>
+                                        @endif
+                                    </div>
+                                </div>
+                                @endif()
+                                <div class="col-md-6">
+                                    <div class="form-group required">
                                         <label>Address</label>
                                         <textarea type="text" name="address" id="address" {{$disabled}}  class="form-control" maxlength="255" placeholder="Address" rows="3" required>{{old('address', @$admission->address)}}</textarea>
                                         @if($errors->has('address'))
@@ -217,6 +254,16 @@
 										</select>
 									</div>
 								</div>
+                                <div class="col-md-6">
+                                    <div class="form-group required">
+                                        <label>Notes</label>
+                                        <!-- <input type="notes" name="notes" id="notes" {{$disabled}}  value="{{old('notes', @$admission->notes)}}" class="form-control" maxlength="255" placeholder="notes" /> -->
+                                        <textarea rows="5" class="form-control" name="notes" id="notes">{{old('notes', @$admission->notes)}}</textarea>
+                                        @if($errors->has('notes'))
+                                        <div class="error text-danger">{{ $errors->first('notes') }}</div>
+                                        @endif
+                                    </div>
+                                </div>
                                 @endif
 								
                             </div>

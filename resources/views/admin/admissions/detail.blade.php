@@ -53,6 +53,14 @@
 								<dt class="col-xl-2 col-lg-2 col-md-3 col-sm-4">Mother Name</dt>
 								<dd class="col-xl-10 col-lg-10 col-md-9 col-sm-8">{{@$admission->mother_name}}</dd>
 
+								<dt class="col-xl-2 col-lg-2 col-md-3 col-sm-4">Enrollment Number</dt>
+								<dd class="col-xl-10 col-lg-10 col-md-9 col-sm-8">{{@$admission->enrollment_number}}</dd>
+
+								<dt class="col-xl-2 col-lg-2 col-md-3 col-sm-4">Roll Number</dt>
+								<dd class="col-xl-10 col-lg-10 col-md-9 col-sm-8">{{@$admission->roll_number}}</dd>
+								<dt class="col-xl-2 col-lg-2 col-md-3 col-sm-4">Date-of-Birth</dt>
+								<dd class="col-xl-10 col-lg-10 col-md-9 col-sm-8">{{@$admission->dob}}</dd>
+
 								<dt class="col-xl-2 col-lg-2 col-md-3 col-sm-4">University</dt>
 								<dd class="col-xl-10 col-lg-10 col-md-9 col-sm-8">{{@$institute->university_name}}</dd>
 								<dt class="col-xl-2 col-lg-2 col-md-3 col-sm-4">Course</dt>
