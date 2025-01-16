@@ -133,7 +133,7 @@
                                 @if(@$mode == 'Edit')
                                 <div class="col-md-6">
                                     <div class="form-group required">
-                                        <label>Enrollment No.</label>
+                                        <label>Enrollment No.(For Office Use Only)</label>
                                         @if(is_admin())
                                             <input type="text" name="enrollment_number" id="enrollment_number" {{$disabled}}  value="{{old('enrollment_number', @$admission->enrollment_number)}}" class="form-control" maxlength="255" placeholder="Enrollment Number" />
                                             @else
@@ -147,7 +147,7 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group required">
-                                        <label>Roll No.</label>
+                                        <label>Roll No.(For Office Use Only)</label>
                                         @if(is_admin())
                                             <input type="text" name="roll_number" id="roll_number" {{$disabled}}  value="{{old('roll_number', @$admission->roll_number)}}" class="form-control" maxlength="255" placeholder="Roll Number" />
                                             @else
