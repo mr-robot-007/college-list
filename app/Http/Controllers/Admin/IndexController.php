@@ -144,7 +144,7 @@ class IndexController extends Controller
 
     public function logout()
     {
-        if($getUserInfo = resolve(Auth::Class)->getUserInfo()==null)
+        if(resolve(Auth::Class)->getUserInfo()!=null)
         {
             resolve(Auth::Class)->expireCurrentUser();
         }
