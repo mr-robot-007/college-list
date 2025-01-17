@@ -124,7 +124,7 @@
                                 <div class="col-md-6">
                                     <div class="form-group required">
                                         <label>Date of Birth</label>
-                                        <input type="date" name="date_of_birth" id="date_of_birth" {{$disabled}}  value="{{old('date_of_birth', @$admission->date_of_birth)}}" class="form-control" maxlength="255" placeholder="D.O.B" required />
+                                        <input type="date" name="date_of_birth" id="date_of_birth" {{$disabled}}  value="{{old('date_of_birth', @$admission->dob)}}" class="form-control" maxlength="255" placeholder="D.O.B" required />
                                         @if($errors->has('date_of_birth'))
                                         <div class="error text-danger">{{ $errors->first('date_of_birth') }}</div>
                                         @endif
@@ -260,7 +260,7 @@
                                     <div class="form-group required">
                                         <label>Notes</label>
                                         <!-- <input type="notes" name="notes" id="notes" {{$disabled}}  value="{{old('notes', @$admission->notes)}}" class="form-control" maxlength="255" placeholder="notes" /> -->
-                                        <textarea rows="5" class="form-control" name="notes" id="notes">{{old('notes', @$admission->notes)}}</textarea>
+                                        <textarea rows="5" class="form-control" name="notes" {{$disabled}} id="notes">{{old('notes', @$admission->notes)}}</textarea>
                                         @if($errors->has('notes'))
                                         <div class="error text-danger">{{ $errors->first('notes') }}</div>
                                         @endif
